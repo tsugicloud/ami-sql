@@ -44,7 +44,7 @@ fi
 echo Checking if there already is a git and is it good
 if [ -d /var/www/html ] ; then
   if [ -d /var/www/html/tsugi ] ; then
-    if [ ! git status /var/www/html/tsugi ] ; then
+    if ! git status /var/www/html/tsugi ; then
       echo git status failed on /var/www/html/tsugi
       export TSUGI_FRESH_EFS=yes
     fi
@@ -52,7 +52,7 @@ if [ -d /var/www/html ] ; then
     echo /var/www/html/tsugi does not exist
     export TSUGI_FRESH_EFS=yes
   fi
-  if [ ! git status /var/www/html ] ; then
+  if ! git status /var/www/html ; then
     echo git status failed on /var/www/html
     export TSUGI_FRESH_EFS=yes
   fi
@@ -94,7 +94,7 @@ if [ ! -d /var/www/html/tsugi/.git ]; then
 fi
 
 # Sanity Check
-if [[ -f /var/www/html/tsugi/admin/upgrade.php ] && [ -f /var/www/html/tsugi/admin/install/update.php]] ] ; then
+if [[ -f /var/www/html/tsugi/admin/upgrade.php ] && [ -f /var/www/html/tsugi/admin/install/update.php] ] ; then
   echo Tsugi checkout looks good
 else
   echo Tsugi checkout fail
