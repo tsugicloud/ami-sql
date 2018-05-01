@@ -122,12 +122,10 @@ chmod a+s /usr/local/bin/gitx
 chown -R www-data:www-data /var/www/html/tsugi
 
 # Create/update the Tsugi database tables
-cd /var/www/html/tsugi/admin
-su -s "php upgrade.php" www-data
+su -s "/home/ubuntu/ami-sql/db_upgrade.sh" www-data
 
 # Install any needed tools if we are second to the cluster
-cd /var/www/html/tsugi/admin/install
-su -s "php update.php" www-data
+su -s "/home/ubuntu/ami-sql/tool_update.sh" www-data
 
 # Make git work from the browser
 if [ -n "$TSUGI_SETUP_GIT" ] ; then
