@@ -42,29 +42,28 @@ if [ ! -d /efs ]; then
 fi
 
 echo Checking if there already is a git and is it good
-if [ -d /efs/html ] ; then
-  if [ -d /efs/html/tsugi ] ; then
-    if [ ! git status /efs/html/tsugi ] ; then
-      echo git status failed on /efs/html/tsugi
+if [ -d /var/www/html ] ; then
+  if [ -d /var/www/html/tsugi ] ; then
+    if [ ! git status /var/www/html/tsugi ] ; then
+      echo git status failed on /var/www/html/tsugi
       export TSUGI_FRESH_EFS=yes
     fi
   else
-    echo /efs/html/tsugi does not exist
+    echo /var/www/html/tsugi does not exist
     export TSUGI_FRESH_EFS=yes
   fi
-  if [ ! git status /efs/html ] ; then
-    echo git status failed on /efs/html
+  if [ ! git status /var/www/html ] ; then
+    echo git status failed on /var/www/html
     export TSUGI_FRESH_EFS=yes
   fi
 fi
 
-if [[ -f /efs/html && -n "$TSUGI_FRESH_EFS" ]] ; then
-    echo Clearing out /efs/html
-    echo File count: `du -a /efs/html | wc -l`
-    rm -rf /efs/html
-    echo /efs cleared.
+if [[ -f /var/www/html && -n "$TSUGI_FRESH_EFS" ]] ; then
+    echo Clearing out /var/www/html
+    echo File count: `du -a /var/www/html | wc -l`
+    rm -rf /var/www/html/* /var/www/html/.??*
+    echo /var/www/html cleared.
 fi
-
 
 
 if [ ! -d /efs/blobs ]; then
