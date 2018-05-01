@@ -23,8 +23,8 @@ Making the pre-AMI instance
 Log in and
 
     sudo bash
-    git clone https://github.com/tsugicloud/ami.git
-    cd ami
+    git clone https://github.com/tsugicloud/ami-sql.git
+    cd ami-sql
     bash pre-ami.sh
     systemctl poweroff
 

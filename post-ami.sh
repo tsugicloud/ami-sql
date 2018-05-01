@@ -1,5 +1,5 @@
-echo Running post-ami `date "+%F-%T"`
-touch /tmp/post-ami-`date "+%F-%T"`
+echo Running post-ami-sql `date "+%F-%T"`
+touch /tmp/post-ami-sql-`date "+%F-%T"`
 
 # source /home/ubuntu/tsugi_env.sh
 
@@ -70,16 +70,13 @@ fi
 if [ ! -d /efs/blobs ]; then
   mkdir /efs/blobs
 fi
-if [ ! -d /efs/html ]; then
-  mkdir /efs/html
-fi
 
 echo "Patching efs permissions"
 chown -R www-data:www-data /efs
 
 # If we are making a fresh install
-if [ ! -d /efs/html/tsugi/.git ]; then
-  cd /efs/html/
+if [ ! -d /var/www/html/tsugi/.git ]; then
+  cd /var/www/html/
   if [ -n "$MAIN_REPO" ] ; then
     echo Cloning $MAIN_REPO
     git clone $MAIN_REPO site
@@ -92,13 +89,13 @@ if [ ! -d /efs/html/tsugi/.git ]; then
   cd ..
   rm -r site
 
-  cd /efs/html/
+  cd /var/www/html/
   git clone https://github.com/tsugiproject/tsugi.git
 
 fi
 
 # Sanity Check
-if [[ -f /efs/html/tsugi/admin/upgrade.php ]] ; then
+if [[ -f /var/www/html/tsugi/admin/upgrade.php ] && [ -f /var/www/html/tsugi/admin/install/update.php]] ] ; then
   echo Tsugi checkout looks good
 else
   echo Tsugi checkout fail
@@ -106,23 +103,16 @@ else
 fi
 
 # Make sure FETCH_HEAD and ORIG_HEAD are created
-cd /efs/html
+cd /var/www/html
 git pull
-cd /efs/html/tsugi
+cd /var/www/html/tsugi
 git pull
 
 # Fix the config.php file
-if [ ! -f /efs/html/tsugi/config.php ] ; then
+if [ ! -f /var/www/html/tsugi/config.php ] ; then
     echo Building config.php
-    php /home/ubuntu/ami/fixconfig.php < /home/ubuntu/ami/config.php > /efs/html/tsugi/config.php
+    php /home/ubuntu/ami-sql/fixconfig.php < /home/ubuntu/ami-sql/config.php > /var/www/html/tsugi/config.php
 fi
-
-echo Copying to /var/www/html
-rsync -avh /efs/html/ /var/www/html/ --delete
-
-# Create/update the Tsugi database tables
-cd /var/www/html/tsugi/admin
-php upgrade.php
 
 # Make git work from the browser
 cp /usr/bin/git /usr/local/bin/gitx
@@ -132,9 +122,13 @@ chmod a+s /usr/local/bin/gitx
 # Patch permissions
 chown -R www-data:www-data /var/www/html/tsugi
 
-# Create the tables
+# Create/update the Tsugi database tables
 cd /var/www/html/tsugi/admin
-php upgrade.php
+su -s "php upgrade.php" www-data
+
+# Install any needed tools if we are second to the cluster
+cd /var/www/html/tsugi/admin/install
+su -s "php update.php" www-data
 
 # Make git work from the browser
 if [ -n "$TSUGI_SETUP_GIT" ] ; then
@@ -155,11 +149,11 @@ echo ======= Cleanup Done
 # https://askubuntu.com/questions/2368/how-do-i-set-up-a-cron-job
 
 echo ====== Setting up cron jobs
-cp /home/ubuntu/ami/cron.sh /home/ubuntu/cron.sh
+cp /home/ubuntu/ami-sql/cron.sh /home/ubuntu/cron.sh
 chown ubuntu:ubuntu /home/ubuntu/cron.sh
 chmod 664 /home/ubuntu/cron.sh
 
-cp /home/ubuntu/ami/crontab.txt /var/spool/cron/crontabs/ubuntu
+cp /home/ubuntu/ami-sql/crontab.txt /var/spool/cron/crontabs/ubuntu
 chown ubuntu:ubuntu /var/spool/cron/crontabs/ubuntu
 chmod 600 /var/spool/cron/crontabs/ubuntu
 
