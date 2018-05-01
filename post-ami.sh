@@ -94,7 +94,7 @@ if [ ! -d /var/www/html/tsugi/.git ]; then
 fi
 
 # Sanity Check
-if [[ -f /var/www/html/tsugi/admin/upgrade.php ] && [ -f /var/www/html/tsugi/admin/install/update.php ]] ; then
+if [[ -f /var/www/html/tsugi/admin/upgrade.php && -f /var/www/html/tsugi/admin/install/update.php ]] ; then
   echo Tsugi checkout looks good
 else
   echo Tsugi checkout fail
