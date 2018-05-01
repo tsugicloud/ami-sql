@@ -89,3 +89,20 @@ $CFG->sessionsalt = "fpmqZWBcp993Ca8RNWtVJfeM82Xf2fwK8uwD";
 
 $CFG->timezone = 'America/New_York';
 
+// Store sessions in a database -  Keep this false until the DB upgrade
+// has run once or you won't be able to get into the admin. The
+// connection used should should be a different database or at
+// least a different connection since the Symfony PdoSessionHandler
+// messes with how the connection handles transactions for its own purposes.
+$CFG->sessions_in_db = true;
+if ( $CFG->sessions_in_db ) {
+    $session_save_pdo = new PDO($CFG->pdo, $CFG->dbuser, $CFG->dbpass);
+    $session_save_pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    session_set_save_handler(
+        new \Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler(
+            $session_save_pdo,
+            array('db_table' => $CFG->dbprefix . "sessions")
+        )
+    );
+}
+
