@@ -119,15 +119,20 @@ chown www-data:www-data /usr/local/bin/gitx
 chmod a+s /usr/local/bin/gitx
 
 # Patch permissions
-chown -R www-data:www-data /var/www/html/tsugi
+echo Patching permissions on /var/www/html
+chown -R www-data:www-data /var/www/html
 
 # Create/update the Tsugi database tables
-chmod +x /home/ubuntu/ami-sql/db_upgrade.sh
+echo Create/update tables as necessary
 su -s "/home/ubuntu/ami-sql/db_upgrade.sh" www-data
 
 # Install any needed tools if we are second to the cluster
-chmod +x /home/ubuntu/ami-sql/tool_update.sh
+echo Install/update tools/tsugi as necessary
 su -s "/home/ubuntu/ami-sql/tool_update.sh" www-data
+
+# Create/update the Tsugi database tables needed for tools that just were installed/updated
+echo Create/update tables for the updated tools/tsugi
+su -s "/home/ubuntu/ami-sql/db_upgrade.sh" www-data
 
 # Make git work from the browser
 if [ -n "$TSUGI_SETUP_GIT" ] ; then
