@@ -72,6 +72,8 @@ if ( strlen(getenv('TSUGI_MAP_API_KEY')) > 0 ) {
     $CFG->google_map_api_key = getenv('TSUGI_MAP_API_KEY'); // 'Ve8eH490843cIA9IGl8';
 }
 
+$CFG->dataroot = '/efs/blobs';
+
 $CFG->git_command = '/usr/local/bin/gitx';
 
 $CFG->DEVELOPER = true;
