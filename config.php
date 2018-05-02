@@ -1,11 +1,5 @@
 <?php
 
-function __the_end(){
-    if(($err=error_get_last()))
-        die('<pre>'.print_r($err,true).'</pre>');
-}
-register_shutdown_function('__the_end');
-
 // allow programmatic access to upgrade scripts
 $path = '/var/www/html';
 $fullpath = get_include_path() . PATH_SEPARATOR . $path;
@@ -96,7 +90,7 @@ $CFG->timezone = 'America/New_York';
 // connection used should should be a different database or at
 // least a different connection since the Symfony PdoSessionHandler
 // messes with how the connection handles transactions for its own purposes.
-$CFG->sessions_in_db = true;
+$CFG->sessions_in_db = getenv('SESSIONS_IN_DB') == 'true';
 if ( $CFG->sessions_in_db ) {
     $session_save_pdo = new PDO($CFG->pdo, $CFG->dbuser, $CFG->dbpass);
     $session_save_pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -106,5 +100,34 @@ if ( $CFG->sessions_in_db ) {
             array('db_table' => $CFG->dbprefix . "sessions")
         )
     );
+}
+
+// http://docs.aws.amazon.com/aws-sdk-php/v2/guide/feature-dynamodb-session-handler.html
+$CFG->dynamo_key = getenv('DYNAMODB_KEY'); // 'AKIISDIUSDOUISDHFBUQ';
+$CFG->dynamo_secret = getenv('DYNAMODB_SECRET'); // 'zFKsdkjhkjskhjSAKJHsakjhSAKJHakjhdsasYaZ';
+$CFG->dynamo_region = getenv('DYNAMODB_REGION'); // 'us-east-2'
+if ( strlen($CFG->dynamo_key) > 0 && strlen($CFG->dynamo_secret) > 0 && strlen($CFG->dynamo_region) > 0 ) {
+    $CFG->sessions_in_dynamodb = true;
+    if ( $CFG->sessions_in_dynamodb ) {
+        $dynamoDb = \Aws\DynamoDb\DynamoDbClient::factory(
+            array('region' => $CFG->dynamo_region;
+            'credentials' => array(
+                'key'    => $CFG->dynamo_key,
+                'secret' => $CFG->dynamo_secret
+            ),
+            'version' => 'latest'));
+        $sessionHandler = $dynamoDb->registerSessionHandler(array(
+            'table_name'               => 'sessions',
+            'hash_key'                 => 'id',
+            'session_lifetime'         => 3600,
+            'consistent_read'          => true,
+            'locking_strategy'         => null,
+            'automatic_gc'             => 0,
+            'gc_batch_size'            => 50,
+            'max_lock_wait_time'       => 15,
+            'min_lock_retry_microtime' => 5000,
+            'max_lock_retry_microtime' => 50000,
+        ));
+    }
 }
 

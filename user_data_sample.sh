@@ -9,6 +9,10 @@ export TSUGI_PDO="mysql:host=tsugi-cluster-1.cluster-ce43983889mk.us-east-2.rds.
 export TSUGI_NFS_VOLUME=fs-439fd792.efs.us-east-2.amazonaws.com
 export TSUGI_ADMINPW=apps_admin_pw
 
+export DYNAMODB_KEY= 'AKIISDIUSDOUISDHFBUQ';
+export DYNAMODB_SECRET = 'zFKsdkjhkjskhjSAKJHsakjhSAKJHakjhdsasYaZ';
+export DYNAMODB_REGION = 'us-east-2';
+
 export TSUGI_SETUP_GIT=yes
 export TSUGI_MAIL_DOMAIN=apps.lrnxp.net
 export TSUGI_APPHOME=https://apps.lrnxp.net
