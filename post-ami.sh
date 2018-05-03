@@ -75,6 +75,7 @@ chown -R www-data:www-data /efs
 
 # If we are making a fresh install
 if [ ! -d /var/www/html/tsugi/.git ]; then
+  rm -rf /var/www/html/* /var/www/html/.??*
   cd /var/www/html/
   if [ -n "$MAIN_REPO" ] ; then
     echo Cloning $MAIN_REPO
