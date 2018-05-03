@@ -8,7 +8,7 @@ env | sort
 
 if [ -z "$TSUGI_USER" ] ; then
     echo "ERROR:"
-    echo "Environment variables not set, exiting..."
+    echo "Tsugi environment variables not set, exiting..."
     exit
 fi
 
