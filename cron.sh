@@ -3,6 +3,9 @@
 echo "I am Cron Cron I Am"
 date
 
+cd /var/www/html
+git pull
+
 # Install any needed tools if we are second to the cluster
 sudo su -s "/home/ubuntu/ami-sql/tool_update.sh" www-data
 
