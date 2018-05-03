@@ -6,6 +6,12 @@ touch /tmp/post-ami-sql-`date "+%F-%T"`
 echo "====== Environment variables"
 env | sort
 
+if [ -z "$TSUGI_USER" ] ; then
+    echo "ERROR:"
+    echo "Environment variables not set, exiting..."
+    exit
+fi
+
 cat << EOF >> /home/ubuntu/.bashrc
 if [ "\$EUID" -ne 0 ]
 then
