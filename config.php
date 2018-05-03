@@ -110,7 +110,7 @@ if ( strlen($CFG->dynamo_key) > 0 && strlen($CFG->dynamo_secret) > 0 && strlen($
     $CFG->sessions_in_dynamodb = true;
     if ( $CFG->sessions_in_dynamodb ) {
         $dynamoDb = \Aws\DynamoDb\DynamoDbClient::factory(
-            array('region' => $CFG->dynamo_region;
+            array('region' => $CFG->dynamo_region,
             'credentials' => array(
                 'key'    => $CFG->dynamo_key,
                 'secret' => $CFG->dynamo_secret
