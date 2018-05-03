@@ -81,7 +81,7 @@ if [ ! -d /var/www/html/tsugi/.git ]; then
     git clone $MAIN_REPO site
   else
     echo Cloning default repo
-    git clone https://github.com/tsugicloud/dev-jekyll-site.git site
+    git clone https://github.com/tsugicloud/tsugi-parent.git site
   fi
   cd site
   mv .git* * ..
