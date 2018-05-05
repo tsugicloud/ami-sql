@@ -43,7 +43,7 @@ if ( strlen(getenv('TSUGI_SERVICENAME')) > 0 ) {
     $CFG->servicename = getenv('TSUGI_SERVICENAME');
 }
 
-$CFG->servicedesc = "This is a docker instance of the Tsugi Development Environment";
+$CFG->servicedesc = getenv('TSUGI_SERVICEDESC');
 
 // Record local analytics but don't send anywhere.
 $CFG->launchactivity = true;
@@ -70,16 +70,15 @@ $CFG->dataroot = '/efs/blobs';
 
 $CFG->git_command = '/usr/local/bin/gitx';
 
-$CFG->DEVELOPER = true;
+$CFG->DEVELOPER = false;
 
 $CFG->cookiesecret = 'jTuURh36Fr4sRPnUsHKP4G968H8r3xkzpMsk';
 $CFG->cookiename = 'TSUGIAUTO';
 $CFG->cookiepad = 'B77trww5PQ';
 
-$CFG->maildomain = false;
+$CFG->maildomain = getenv('TSUGI_MAILDOMAIN');
 $CFG->mailsecret = 'XaWPZvESnNV84FvHpqQ69yhHAkyrNEVjkcF7';
 $CFG->maileol = "\n";
-
 
 $CFG->sessionsalt = "fpmqZWBcp993Ca8RNWtVJfeM82Xf2fwK8uwD";
 

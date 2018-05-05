@@ -24,7 +24,7 @@ EOF
 apt-get update
 
 echo ======= Installing Postfix
-echo "postfix postfix/mailname string ${TSUGI_MAIL_DOMAIN}" | debconf-set-selections
+echo "postfix postfix/mailname string ${TSUGI_MAILDOMAIN}" | debconf-set-selections
 echo "postfix postfix/main_mailer_type string 'Internet Site'" | debconf-set-selections
 apt-get install -y mailutils
 
@@ -83,17 +83,24 @@ chown -R www-data:www-data /efs
 if [ ! -d /var/www/html/tsugi/.git ]; then
   rm -rf /var/www/html/* /var/www/html/.??*
   cd /var/www/html/
-  if [ -n "$MAIN_REPO" ] ; then
-    echo Cloning $MAIN_REPO
-    git clone $MAIN_REPO site
+  if [ -n "$MAIN_REDIRECT" ] ; then
+      echo Redirecting top level path to $MAIN_REDIRECT
+cat << EOF > /var/www/html/.htaccess
+RedirectMatch ^/$ $MAIN_REDIRECT
+EOF
   else
-    echo Cloning default repo
-    git clone https://github.com/tsugiproject/tsugi-parent.git site
+    if [ -n "$MAIN_REPO" ] ; then
+      echo Cloning $MAIN_REPO
+      git clone $MAIN_REPO site
+    else
+      echo Cloning default repo
+      git clone https://github.com/tsugiproject/tsugi-parent.git site
+    fi
+    cd site
+    mv .git* * ..
+    cd ..
+    rm -r site
   fi
-  cd site
-  mv .git* * ..
-  cd ..
-  rm -r site
 
   cd /var/www/html/
   git clone https://github.com/tsugiproject/tsugi.git

@@ -14,7 +14,7 @@ export DYNAMODB_SECRET = 'zFKsdkjhkjskhjSAKJHsakjhSAKJHakjhdsasYaZ';
 export DYNAMODB_REGION = 'us-east-2';
 
 export TSUGI_SETUP_GIT=yes
-export TSUGI_MAIL_DOMAIN=apps.lrnxp.net
+export TSUGI_MAILDOMAIN=apps.lrnxp.net
 export TSUGI_APPHOME=https://apps.lrnxp.net
 export TSUGI_WWWROOT=https://apps.lrnxp.net/tsugi
 export TSUGI_SERVICENAME=LearnXP
