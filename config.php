@@ -57,11 +57,14 @@ $CFG->upgrading = false;
 $CFG->bootswatch = 'cerulean';
 $CFG->bootswatch_color = rand(0,52);
 
+$CFG->google_client_id = false;
+$CFG->google_client_secret = false;
 if ( strlen(getenv('TSUGI_GOOGLE_CLIENT_ID')) > 0 ) {
     $CFG->google_client_id = getenv('TSUGI_GOOGLE_CLIENT_ID');
     $CFG->google_client_secret = getenv('TSUGI_GOOGLE_CLIENT_SECRET');
 }
 
+$CFG->google_map_api_key = false;
 if ( strlen(getenv('TSUGI_MAP_API_KEY')) > 0 ) {
     $CFG->google_map_api_key = getenv('TSUGI_MAP_API_KEY'); // 'Ve8eH490843cIA9IGl8';
 }
@@ -72,15 +75,16 @@ $CFG->git_command = '/usr/local/bin/gitx';
 
 $CFG->DEVELOPER = false;
 
-$CFG->cookiesecret = 'jTuURh36Fr4sRPnUsHKP4G968H8r3xkzpMsk';
+$PADDING_SECURE = substr(getenv('TSUGI_USER'),0,3);
+$CFG->cookiesecret = md5('jTusRPnUsHKP4G968H8r3xkzpMsk'.$PADDING_SECURE);
 $CFG->cookiename = 'TSUGIAUTO';
-$CFG->cookiepad = 'B77trww5PQ';
+$CFG->cookiepad = md5('B77trww5PQ'.$PADDING_SECURE);
 
 $CFG->maildomain = getenv('TSUGI_MAILDOMAIN');
-$CFG->mailsecret = 'XaWPZvESnNV84FvHpqQ69yhHAkyrNEVjkcF7';
+$CFG->mailsecret = md5('XaWPZvESnNV84FvHpqQ69yhHAkyrNEVjkcF7'.$PADDING_SECURE);
 $CFG->maileol = "\n";
 
-$CFG->sessionsalt = "fpmqZWBcp993Ca8RNWtVJfeM82Xf2fwK8uwD";
+$CFG->sessionsalt = md5("fpmqZWBcp993Ca8RNWtVJfeM82Xf2fwK8uwD".$PADDING_SECURE);
 
 $CFG->timezone = 'America/New_York';
 
