@@ -37,6 +37,11 @@ Make an EFS volume and put its connection information into:
 
 Set up a DynamoDB service and make a table:
 
+    Table name: sessions
+    Primary key: id
+
+I set the read and write levels to 5 / second and enable autoscaling.
+
 Then put the DynamoDB connection information into your user data:
 
     export DYNAMODB_KEY= 'AKIISDIUSDOUISDHFBUQ';
