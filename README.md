@@ -58,8 +58,18 @@ To debug the install process, you might find it useful to look at:
 
     /var/log/cloud-init-output.log
 
-Notes
-=====
+References
+==========
+
+About DynamoDB and PHP Sessions:
+
+https://docs.aws.amazon.com/aws-sdk-php/v2/guide/feature-dynamodb-session-handler.html
+
+About DynamoDB setup:
+
+https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/SettingUp.DynamoWebService.html
+https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/authentication-and-access-control.html
+
 
 About EFS and /etc/fstab
 
