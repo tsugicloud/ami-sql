@@ -25,7 +25,7 @@ Creating the Necessary Services and Building the User Data
 Take a look at the "user_data.sh" file - make your own copy of it.  Once you edit it
 do not check it into a public repo.
 
-Make an Aurora Instance - then get the DB connection information and put it in your user_data.sh file
+Make an Aurora instance - then get the DB connection information and put it in your user_data.sh file
 
     export TSUGI_USER=apps_db_user
     export TSUGI_PASSWORD=APPS_PW_8973498
