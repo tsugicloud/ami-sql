@@ -9,7 +9,7 @@ Make the pre-instance to make the ami
     t2.micro
     don't put user data in for the pre-process
 
-Log in and
+Once your EC2 Instance is up and running, log in and run the following sequence:
 
     sudo bash
     git clone https://github.com/tsugicloud/ami-sql.git
