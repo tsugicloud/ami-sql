@@ -25,7 +25,16 @@ Creating the Necessary Services and Building the User Data
 Take a look at the "user_data.sh" file - make your own copy of it.  Once you edit it
 do not check it into a public repo.
 
-Make an Aurora instance - then get the DB connection information and put it in your user_data.sh file
+Make an Aurora instance.  As you create the instance, you set up the master user name and password (effectively the
+MySQL root account). When this is done, you will want to log into an EC2 instance that is in the VPC
+and run the following commands to create the table and sub-account:
+
+   mysql -h tsugi-cluster-1.cluster-ce43983889mk.us-east-2.rds.amazonaws.com -u tsugi_root_account -p
+   (Enter the master password you created)
+   CREATE DATABASE apps_db DEFAULT CHARACTER SET utf8;
+   GRANT ALL ON apps_db.* TO 'apps_db_user'@'172.%' IDENTIFIED BY 'APPS_PW_8973498';
+
+Now you can set up the user_data for the database in the user_data.sh file:
 
     export TSUGI_USER=apps_db_user
     export TSUGI_PASSWORD=APPS_PW_8973498
@@ -42,7 +51,7 @@ Set up a DynamoDB service and make a table:
 
 I set the read and write levels to 5/second and enable autoscaling.
 
-Look on the DynamoDB table screen to find an ARN and then go to IAM and create
+Look on the DynamoDB table screen to find the arn for the table ARN and then go to IAM and create
 an IAM User that has the following powers (changing the arn of course):
 
     {
@@ -71,8 +80,10 @@ Your IAM user will have a key and secret, and put them into the user data:
 Making an EC2 Instance Using the AMI
 ====================================
 
+To build your EC2 Instance, make a new instance and start with the AMI you created above.
+
 Put in the user data under Advanced - copy everything from the "#! /bin/bash" to the end of the file.
-When the process sees the hashbang, it runs the user data as a shell script.
+When the EC@ provisioning process sees the hashbang, it runs the user data as a shell script.
 
 To debug the install process, you might find it useful to look at:
 
@@ -83,7 +94,7 @@ References
 
 About DynamoDB and PHP Sessions:
 
-https://docs.aws.amazon.com/aws-sdk-php/v2/guide/feature-dynamodb-session-handler.html
+https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/service_dynamodb-session-handler.html
 
 About DynamoDB setup:
 
