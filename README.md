@@ -40,9 +40,29 @@ Set up a DynamoDB service and make a table:
     Table name: sessions
     Primary key: id
 
-I set the read and write levels to 5 / second and enable autoscaling.
+I set the read and write levels to 5/second and enable autoscaling.
 
-Then put the DynamoDB connection information into your user data:
+Look on the DynamoDB table screen to find an ARN and then go to IAM and create
+an IAM User that has the following powers (changing the arn of course):
+
+    {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Action": [
+                    "dynamodb:GetItem",
+                    "dynamodb:UpdateItem",
+                    "dynamodb:DeleteItem",
+                    "dynamodb:Scan",
+                    "dynamodb:BatchWriteItem"
+                ],
+                "Effect": "Allow",
+                "Resource": "arn:aws:dynamodb:us-east-2:681234576555:table/sessions"
+            }
+        ]
+    }
+
+Your IAM user will have a key and secret, and put them into the user data:
 
     export DYNAMODB_KEY= 'AKIISDIUSDOUISDHFBUQ';
     export DYNAMODB_SECRET = 'zFKsdkjhkjskhjSAKJHsakjhSAKJHakjhdsasYaZ';
