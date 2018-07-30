@@ -51,6 +51,8 @@ chown -R www-data:www-data /efs
 
 # Construct the web
 cd /var/www/html/
+rm index.html   # Apache2 Debian default page
+
 if [ -n "$MAIN_REPO" ] ; then
   echo Cloning $MAIN_REPO
   git clone $MAIN_REPO site
