@@ -3,15 +3,9 @@
 echo "I am Cron Cron I Am"
 date
 
-if [ -f /var/www/html/.git ] ; then
-  echo "Pulling main site"
-  cd /var/www/html
-  git pull
-fi
+sudo su -s "/home/ubuntu/ami-sql/html_update.sh" www-data
 
-echo "Pulling Tsugi"
-cd /var/www/html/tsugi
-git pull
+sudo su -s "/home/ubuntu/ami-sql/tsugi_update.sh" www-data
 
 # Install any needed tools if we are second to the cluster
 sudo su -s "/home/ubuntu/ami-sql/tool_update.sh" www-data
