@@ -36,9 +36,10 @@ if ( strlen(getenv('TSUGI_ADMINPW')) > 0 ) {
     $CFG->adminpw   = getenv('TSUGI_ADMINPW');
 }
 
-$CFG->install_folder = $CFG->dirroot.'/mod';
-if ( strlen(getenv('TSUGI_INSTALL_FOLDER')) > 0 ) {
-    $CFG->install_folder   = getenv('TSUGI_INSTALL_FOLDER');
+// Have to do this after apphome is set
+if ( isset($CFG->apphome) ) {
+    $CFG->tool_folders = array("admin", "../tools", "../mod");
+    $CFG->install_folder = $CFG->dirroot.'/../mod';
 }
 
 
