@@ -87,6 +87,8 @@ When the EC@ provisioning process sees the hashbang, it runs the user data as a 
 
 To debug the install process, you might find it useful to look at:
 
+After it comes up - you can see the post-ami process output in:
+
     /var/log/cloud-init-output.log
 
 References

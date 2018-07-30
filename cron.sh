@@ -3,7 +3,14 @@
 echo "I am Cron Cron I Am"
 date
 
-cd /var/www/html
+if [ -f /var/www/html/.git ] ; then
+  echo "Pulling main site"
+  cd /var/www/html
+  git pull
+fi
+
+echo "Pulling Tsugi"
+cd /var/www/html/tsugi
 git pull
 
 # Install any needed tools if we are second to the cluster
