@@ -37,6 +37,10 @@ if ( strlen(getenv('TSUGI_ADMINPW')) > 0 ) {
 }
 
 $CFG->install_folder = $CFG->dirroot.'/mod';
+if ( strlen(getenv('TSUGI_INSTALL_FOLDER')) > 0 ) {
+    $CFG->install_folder   = getenv('TSUGI_INSTALL_FOLDER');
+}
+
 
 $CFG->servicename = 'TSUGI';
 if ( strlen(getenv('TSUGI_SERVICENAME')) > 0 ) {
