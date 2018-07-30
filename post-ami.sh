@@ -91,7 +91,7 @@ git pull
 # Fix the config.php file
 if [ ! -f /var/www/html/tsugi/config.php ] ; then
     echo Building config.php
-    php /home/ubuntu/ami/fixconfig.php < /home/ubuntu/ami/config.php > /efs/html/tsugi/config.php
+    php /home/ubuntu/ami-sql/fixconfig.php < /home/ubuntu/ami-sql/config.php > /var/www/html/tsugi/config.php
 fi
 
 # Create/update the Tsugi database tables
@@ -133,11 +133,11 @@ echo ======= Cleanup Done
 # https://askubuntu.com/questions/2368/how-do-i-set-up-a-cron-job
 
 echo ====== Setting up cron jobs
-cp /home/ubuntu/ami/cron.sh /home/ubuntu/cron.sh
+cp /home/ubuntu/ami-sql/cron.sh /home/ubuntu/cron.sh
 chown ubuntu:ubuntu /home/ubuntu/cron.sh
 chmod 664 /home/ubuntu/cron.sh
 
-cp /home/ubuntu/ami/crontab.txt /var/spool/cron/crontabs/ubuntu
+cp /home/ubuntu/ami-sql/crontab.txt /var/spool/cron/crontabs/ubuntu
 chown ubuntu:ubuntu /var/spool/cron/crontabs/ubuntu
 chmod 600 /var/spool/cron/crontabs/ubuntu
 
