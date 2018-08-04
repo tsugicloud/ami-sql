@@ -59,7 +59,7 @@ if [ -n "$MAIN_REDIRECT" ] ; then
 RedirectMatch ^/$ $MAIN_REDIRECT
 EOF
   mkdir /var/www/html/mod
-  cat << EOF > /var/www/html/.htaccess
+  cat << EOF > /var/www/html/mod/config.php
 <?php
 require_once dirname(__DIR__)."/tsugi/config.php";
 EOF
