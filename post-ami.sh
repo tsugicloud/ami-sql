@@ -55,9 +55,15 @@ rm index.html   # Apache2 Debian default page
 
 if [ -n "$MAIN_REDIRECT" ] ; then
   echo Redirecting top level path to $MAIN_REDIRECT
-cat << EOF > /var/www/html/.htaccess
+  cat << EOF > /var/www/html/.htaccess
 RedirectMatch ^/$ $MAIN_REDIRECT
 EOF
+  mkdir /var/www/html/mod
+  cat << EOF > /var/www/html/.htaccess
+<?php
+require_once dirname(__DIR__)."/tsugi/config.php";
+EOF
+
 else
   if [ -n "$MAIN_REPO" ] ; then
     echo Cloning $MAIN_REPO
