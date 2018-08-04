@@ -53,25 +53,32 @@ chown -R www-data:www-data /efs
 cd /var/www/html/
 rm index.html   # Apache2 Debian default page
 
-if [ -n "$MAIN_REPO" ] ; then
-  echo Cloning $MAIN_REPO
-  git clone $MAIN_REPO site
+if [ -n "$MAIN_REDIRECT" ] ; then
+  echo Redirecting top level path to $MAIN_REDIRECT
+cat << EOF > /var/www/html/.htaccess
+RedirectMatch ^/$ $MAIN_REDIRECT
+EOF
 else
-  echo Cloning default repo
-  git clone https://github.com/tsugicloud/dev-jekyll-site.git site
-fi
-cd site
-mv .git* * ..
-mv .??* ..
-cd ..
-rm -r site
+  if [ -n "$MAIN_REPO" ] ; then
+    echo Cloning $MAIN_REPO
+    git clone $MAIN_REPO site
+  else
+    echo Cloning default repo
+    git clone https://github.com/tsugicloud/dev-jekyll-site.git site
+  fi
+  cd site
+  mv .git* * ..
+  mv .??* ..
+  cd ..
+  rm -r site
 
-# Sanity Check
-if [[ -d /var/www/html/.git ]] ; then
-  echo Main site checkout looks good
-else
-  echo Main site checkout fail
-  exit 1
+  # Sanity Check
+  if [[ -d /var/www/html/.git ]] ; then
+    echo Main site checkout looks good
+  else
+    echo Main site checkout fail
+    exit 1
+  fi
 fi
 
 cd /var/www/html/
