@@ -62,6 +62,7 @@ else
 fi
 cd site
 mv .git* * ..
+mv .??* ..
 cd ..
 rm -r site
 

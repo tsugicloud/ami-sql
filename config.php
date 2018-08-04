@@ -42,13 +42,28 @@ if ( isset($CFG->apphome) ) {
     $CFG->install_folder = $CFG->dirroot.'/../mod';
 }
 
-
 $CFG->servicename = 'TSUGI';
 if ( strlen(getenv('TSUGI_SERVICENAME')) > 0 ) {
     $CFG->servicename = getenv('TSUGI_SERVICENAME');
 }
 
 $CFG->servicedesc = getenv('TSUGI_SERVICEDESC');
+
+// $CFG->websocket_port = 2021;
+// $CFG->websocket_secret = 'changeme';
+// $CFG->websocket_url = 'ws://localhost:2021';
+
+if ( strlen(getenv('TSUGI_WEBSOCKET_PORT')) > 0 ) {
+    $CFG->websocket_port = getenv('TSUGI_WEBSOCKET_PORT');
+}
+
+if ( strlen(getenv('TSUGI_WEBSOCKET_SECRET')) > 0 ) {
+    $CFG->websocket_secret = getenv('TSUGI_WEBSOCKET_SECRET');
+}
+
+if ( strlen(getenv('TSUGI_WEBSOCKET_URL')) > 0 ) {
+    $CFG->websocket_url = getenv('TSUGI_WEBSOCKET_URL');
+}
 
 // Record local analytics but don't send anywhere.
 $CFG->launchactivity = true;
