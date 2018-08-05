@@ -17,6 +17,9 @@ EOF
 
 apt-get update
 
+# Move this to pre eventually
+apt install debconf-utils
+
 echo ======= Installing Postfix
 echo "postfix postfix/mailname string ${TSUGI_MAIL_DOMAIN}" | debconf-set-selections
 echo "postfix postfix/main_mailer_type string 'Internet Site'" | debconf-set-selections
