@@ -61,6 +61,8 @@ if [ -n "$TSUGI_OWNEREMAIL" ] ; then
    email=$TSUGI_OWNEREMAIL
 fi
 
+echo Mail sending to $email
+
 mail $email -r $email -s "$host Errors" < $message
 
 cp $NEWERRORS $OLDERRORS
