@@ -2,6 +2,29 @@
 
 // php fixconfig.php < config.php
 
+// require_once('/var/www/html/tsugi/config-dist.php');
+require_once('/Applications/MAMP/htdocs/tsugi/config-dist.php');
+
+$mapping = array(
+  "user" => "dbuser",
+  "password" => "dbpass",
+  "map_api_key" => "google_map_api_key",
+);
+
+$overrides = '';
+foreach($_SERVER as $k => $v ) {
+    if (strpos($k, 'TSUGI_') === false ) continue;
+    $p = strtolower(substr($k,6));
+    if ( isset($mapping[$p]) ) $p = $mapping[$p];
+    $newv = '"'.$v.'"'; // assume string;
+    if ( is_numeric($v) ) $newv = $v;
+    if ( $v == 'false' ) $newv = $v;
+    if ( $v == 'true' ) $newv = $v;
+    if ( isset($CFG->{$p}) ) {
+        $overrides .= '$'."CFG->$p = $newv;\n";
+    }
+}
+
 $old = file_get_contents("php://stdin");
 
 $new = preg_replace_callback(
@@ -14,5 +37,7 @@ $new = preg_replace_callback(
     },
     $old
 );
+
+$new = str_replace('// ---OVERRIDES---',$overrides, $new);
 
 echo($new);

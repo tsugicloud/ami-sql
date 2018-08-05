@@ -8,6 +8,11 @@ ini_set('include_path', $fullpath);
 // Grab the config-dist to clean up this file and only show the stuff we've changed
 require_once("config-dist.php");
 $CFG->apphome   = false;
+
+// Overrides will be inserted here - do not change the line below
+
+// ---OVERRIDES---
+
 if ( isset($_SERVER['HTTP_HOST']) ) {
     $CFG->wwwroot   = "http://" . $_SERVER['HTTP_HOST'] . '/tsugi';
 }
