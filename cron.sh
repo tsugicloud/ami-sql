@@ -11,6 +11,8 @@ sudo su -s "/home/ubuntu/ami-sql/tsugi_update.sh" www-data
 sudo su -s "/home/ubuntu/ami-sql/tool_update.sh" www-data
 
 # Wait some random time so we don't all hit at once
+echo
+echo "Pausing for a moment..."
 sleep $[ ( $RANDOM % 60 ) + 1 ]s
 
 # Create/update the Tsugi database tables
