@@ -2,8 +2,7 @@
 
 // php fixconfig.php < config.php
 
-// require_once('/var/www/html/tsugi/config-dist.php');
-require_once('/Applications/MAMP/htdocs/tsugi/config-dist.php');
+require_once('/var/www/html/tsugi/config-dist.php');
 
 $mapping = array(
   "user" => "dbuser",
