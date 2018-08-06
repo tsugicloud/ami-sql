@@ -31,7 +31,7 @@ if [[ -n "$POSTFIX_ORIGIN_DOMAIN"&& -n "$POSTFIX_RELAYHOST" && -n "$POSTFIX_SASL
   echo ======= Post-patching Postfix
   sed < /home/ubuntu/ami-sql/main.cf > /etc/postfix/main.cf \
     -e "s/POSTFIX_ORIGIN_DOMAIN/$POSTFIX_ORIGIN_DOMAIN/" \
-    -e "s/POSTFIX_RELAYHOST/$POSTFIX_RELAYHOST/" \
+    -e "s/POSTFIX_RELAYHOST/$POSTFIX_RELAYHOST/"
   echo $POSTFIX_SASL_PASSWORD > /etc/postfix/sasl_passwd
   echo ======= Restarting Postfix
   postmap hash:/etc/postfix/sasl_passwd
