@@ -10,8 +10,8 @@ echo "Host: $host"
 
 
 LOGFILE=/var/log/apache2/error.log
-OLDERRORS=/tmp/csev-$host-old-errors
-NEWERRORS=/tmp/csev-$host-current-errors
+OLDERRORS=/tmp/tsugi-$host-old-errors
+NEWERRORS=/tmp/tsugi-$host-current-errors
 logdate=`stat $LOGFILE | grep Change: | grep -P ' ([0-9-]+) ' -o | sed 's/ //g'`
 olddate=never
 if [ -e "$OLDERRORS" ]
@@ -61,9 +61,15 @@ if [ -n "$TSUGI_OWNEREMAIL" ] ; then
    email=$TSUGI_OWNEREMAIL
 fi
 
+from='info@learnxp.com';
+if [ -n "$POSTFIX_MAIL_FROM" ] ; then
+   from=$POSTFIX_MAIL_FROM
+fi
+
+
 echo Mail sending to $email
 
-mail $email -r $email -s "$host Errors" < $message
+mail $email -r $from -s "$host Errors" < $message
 
 cp $NEWERRORS $OLDERRORS
  

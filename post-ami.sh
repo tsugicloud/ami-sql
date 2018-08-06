@@ -17,13 +17,28 @@ EOF
 
 apt-get update
 
-# Move this to pre eventually
-apt install debconf-utils
+# Move this to pre eventually - may not need this
+# apt install debconf-utils
 
 echo ======= Installing Postfix
 echo "postfix postfix/mailname string ${TSUGI_MAIL_DOMAIN}" | debconf-set-selections
 echo "postfix postfix/main_mailer_type string 'Internet Site'" | debconf-set-selections
+debconf-show postfix
+
 apt-get install -y mailutils
+
+if [[ -n "$POSTFIX_ORIGIN_DOMAIN"&& -n "$POSTFIX_RELAYHOST" && -n "$POSTFIX_SASL_PASSWORD" ]]; then
+  echo ======= Post-patching Postfix
+  sed < /home/ubuntu/ami-sql/main.cf > /etc/postfix/main.cf \
+    -e "s/POSTFIX_ORIGIN_DOMAIN/$POSTFIX_ORIGIN_DOMAIN/" \
+    -e "s/POSTFIX_RELAYHOST/$POSTFIX_RELAYHOST/" \
+  echo $POSTFIX_SASL_PASSWORD > /etc/postfix/sasl_passwd
+  echo ======= Restarting Postfix
+  postmap hash:/etc/postfix/sasl_passwd
+  /etc/init.d/postfix reload
+else
+  echo "Postfix configuration not done, please POSTFIX_ORIGIN_DOMAIN, POSTFIX_RELAYHOST, POSTFIX_SASL_PASSWORD"
+fi
 
 if [ ! -d /efs ]; then
     echo ====== Setting up the efs volume
