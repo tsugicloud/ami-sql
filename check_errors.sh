@@ -13,14 +13,14 @@ LOGFILE=/var/log/apache2/error.log
 OLDERRORS=/tmp/tsugi-$host-old-errors
 NEWERRORS=/tmp/tsugi-$host-current-errors
 logdate=`stat $LOGFILE | grep Change: | grep -P ' ([0-9-]+) ' -o | sed 's/ //g'`
-olddate=never
+errdate='2006-01-01'
 if [ -e "$OLDERRORS" ]
 then
-olddate=`stat $OLDERRORS | grep Change: | grep -P ' ([0-9-]+) ' -o | sed 's/ //g'`
+errdate=`stat $OLDERRORS | grep Change: | grep -P ' ([0-9-]+) ' -o | sed 's/ //g'`
 fi
 
-echo Dates log $logdate old-errors $olddate
-if [ "$olddate" != "$logdate" ] 
+echo Dates log $logdate old-errors $errdate
+if [ "$logdate" \> "$errdate" ]
 then
    echo "Resetting previous errors"
    rm -f $OLDERRORS
@@ -40,7 +40,7 @@ startpos=`cat $OLDERRORS | wc -l`
 
 echo Postions $startpos $lines
 
-if [ "$startpos" -ge "$lines" ] 
+if [ "$startpos" -ge "$lines" ]
 then
    echo "No new errors"
    exit
@@ -72,5 +72,6 @@ echo Mail sending to $email
 mail $email -r $from -s "$host Errors" < $message
 
 cp $NEWERRORS $OLDERRORS
- 
+
 echo Message sent.
+
