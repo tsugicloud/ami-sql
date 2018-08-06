@@ -55,9 +55,9 @@ $CFG->timezone = 'America/New_York';
 // Also copy upgrading-dist.php to upgrading.php and add your message
 $CFG->upgrading = false;
 
-$CFG->dynamo_key = false; // 'AKIISDIUSDOUISDHFBUQ';
-$CFG->dynamo_secret = false; // 'zFKsdkjhkjskhjSAKJHsakjhSAKJHakjhdsasYaZ';
-$CFG->dynamo_region = false; // 'us-east-2'
+$CFG->dynamodb_key = false; // 'AKIISDIUSDOUISDHFBUQ';
+$CFG->dynamodb_secret = false; // 'zFKsdkjhkjskhjSAKJHsakjhSAKJHakjhdsasYaZ';
+$CFG->dynamodb_region = false; // 'us-east-2'
 
 // Overrides from env vars will be inserted here - do not change the line below
 
