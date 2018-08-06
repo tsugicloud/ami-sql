@@ -55,6 +55,9 @@ $CFG->timezone = 'America/New_York';
 // Also copy upgrading-dist.php to upgrading.php and add your message
 $CFG->upgrading = false;
 
+$CFG->dynamo_key = false; // 'AKIISDIUSDOUISDHFBUQ';
+$CFG->dynamo_secret = false; // 'zFKsdkjhkjskhjSAKJHsakjhSAKJHakjhdsasYaZ';
+$CFG->dynamo_region = false; // 'us-east-2'
 
 // Overrides from env vars will be inserted here - do not change the line below
 
@@ -66,28 +69,7 @@ if ( isset($CFG->apphome) ) {
     $CFG->install_folder = $CFG->dirroot.'/../mod';
 }
 
-
-// Store sessions in a database -  Keep this false until the DB upgrade
-// has run once or you won't be able to get into the admin. The
-// connection used should should be a different database or at
-// least a different connection since the Symfony PdoSessionHandler
-// messes with how the connection handles transactions for its own purposes.
-$CFG->sessions_in_db = getenv('SESSIONS_IN_DB') == 'true';
-if ( $CFG->sessions_in_db ) {
-    $session_save_pdo = new PDO($CFG->pdo, $CFG->dbuser, $CFG->dbpass);
-    $session_save_pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    session_set_save_handler(
-        new \Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler(
-            $session_save_pdo,
-            array('db_table' => $CFG->dbprefix . "sessions")
-        )
-    );
-}
-
 // http://docs.aws.amazon.com/aws-sdk-php/v2/guide/feature-dynamodb-session-handler.html
-$CFG->dynamo_key = getenv('DYNAMODB_KEY'); // 'AKIISDIUSDOUISDHFBUQ';
-$CFG->dynamo_secret = getenv('DYNAMODB_SECRET'); // 'zFKsdkjhkjskhjSAKJHsakjhSAKJHakjhdsasYaZ';
-$CFG->dynamo_region = getenv('DYNAMODB_REGION'); // 'us-east-2'
 if ( strlen($CFG->dynamo_key) > 0 && strlen($CFG->dynamo_secret) > 0 && strlen($CFG->dynamo_region) > 0 ) {
     $CFG->sessions_in_dynamodb = true;
     if ( $CFG->sessions_in_dynamodb ) {
