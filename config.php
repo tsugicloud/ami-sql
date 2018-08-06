@@ -59,6 +59,8 @@ $CFG->dynamodb_key = false; // 'AKIISDIUSDOUISDHFBUQ';
 $CFG->dynamodb_secret = false; // 'zFKsdkjhkjskhjSAKJHsakjhSAKJHakjhdsasYaZ';
 $CFG->dynamodb_region = false; // 'us-east-2'
 
+$CFG->lessons = false;
+
 // Overrides from env vars will be inserted here - do not change the line below
 
 // ---OVERRIDES---
