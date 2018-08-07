@@ -115,6 +115,3 @@ if ( strlen($CFG->dynamodb_key) > 0 && strlen($CFG->dynamodb_secret) > 0 && strl
     }
 }
 
-if ( strlen($CFG->lessons) < 1 ) unset($CFG->lessons);
-if ( strlen($CFG->logo_url) < 1 ) unset($CFG->logo_url);
-if ( strlen($CFG->context_title) < 1 ) unset($CFG->context_title);
