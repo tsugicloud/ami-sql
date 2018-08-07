@@ -64,8 +64,9 @@ if [ ! -d /efs/blobs ]; then
   mkdir /efs/blobs
 fi
 
-echo "Patching efs permissions"
-chown -R www-data:www-data /efs
+# This takes way too long...
+# echo "Patching efs permissions"
+# chown -R www-data:www-data /efs
 
 # Construct the web
 cd /var/www/html/

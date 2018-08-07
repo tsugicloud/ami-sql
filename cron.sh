@@ -18,6 +18,3 @@ sleep $[ ( $RANDOM % 60 ) + 1 ]s
 # Create/update the Tsugi database tables
 sudo su -s "/home/ubuntu/ami-sql/db_upgrade.sh" www-data
 
-# Run as root so as to be able to read the logs
-sudo su -s "/home/ubuntu/ami-sql/check_errors.sh" root
-
