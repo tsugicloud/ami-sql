@@ -59,9 +59,6 @@ $CFG->dynamodb_key = false; // 'AKIISDIUSDOUISDHFBUQ';
 $CFG->dynamodb_secret = false; // 'zFKsdkjhkjskhjSAKJHsakjhSAKJHakjhdsasYaZ';
 $CFG->dynamodb_region = false; // 'us-east-2'
 
-$CFG->lessons = false;
-$CFG->logo_url = false;
-
 // Overrides from env vars will be inserted here - do not change the line below
 
 // ---OVERRIDES---
@@ -76,7 +73,7 @@ if ( strlen(getenv('TSUGI_LOGO_URL')) > 0 ) {
 }
 
 if ( strlen(getenv('TSUGI_CONTEXT_TITLE')) > 0 ) {
-    $CFG->logo_url = getenv('TSUGI_CONTEXT_TITLE');
+    $CFG->context_title = getenv('TSUGI_CONTEXT_TITLE');
 }
 
 if ( strlen(getenv('TSUGI_BADGE_PATH')) > 0 ) {
