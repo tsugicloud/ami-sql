@@ -66,6 +66,23 @@ $CFG->logo_url = false;
 
 // ---OVERRIDES---
 
+// These do not come through in the overrides
+if ( strlen(getenv('TSUGI_LESSONS')) > 0 ) {
+    $CFG->lessons = getenv('TSUGI_LESSONS');
+}
+
+if ( strlen(getenv('TSUGI_LOGO_URL')) > 0 ) {
+    $CFG->logo_url = getenv('TSUGI_LOGO_URL');
+}
+
+if ( strlen(getenv('TSUGI_CONTEXT_TITLE')) > 0 ) {
+    $CFG->logo_url = getenv('TSUGI_CONTEXT_TITLE');
+}
+
+if ( strlen(getenv('TSUGI_BADGE_PATH')) > 0 ) {
+    $CFG->badge_path = getenv('TSUGI_BADGE_PATH');
+}
+
 // Have to do this after apphome is set
 if ( isset($CFG->apphome) ) {
     $CFG->tool_folders = array("admin", "../tools", "../mod");
@@ -98,3 +115,6 @@ if ( strlen($CFG->dynamodb_key) > 0 && strlen($CFG->dynamodb_secret) > 0 && strl
     }
 }
 
+if ( strlen($CFG->lessons) < 1 ) unset($CFG->lessons);
+if ( strlen($CFG->logo_url) < 1 ) unset($CFG->logo_url);
+if ( strlen($CFG->context_title) < 1 ) unset($CFG->context_title);
