@@ -1,9 +1,13 @@
 #! /bin/bash
 
-mysql_root=root
-if [ -n "$MYSQL_ROOT_PASSWORD" ] ; then
-mysql_root=$MYSQL_ROOT_PASSWORD
+source /home/ubuntu/tsugi_env.sh
+
+if [ -z "$MYSQL_ROOT_PASSWORD" ] ; then
+  echo "Must set MYSQL_ROOT_PASSWORD to run this script"
+  exit
 fi
+mysql_root=$MYSQL_ROOT_PASSWORD
+
 export DEBIAN_FRONTEND=noninteractive
 export LC_ALL=C.UTF-8
 echo ======= Pre-MySQL: Update
