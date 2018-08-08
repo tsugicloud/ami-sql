@@ -19,7 +19,7 @@ sleep $[ ( $RANDOM % 60 ) + 1 ]s
 sudo su -s "/home/ubuntu/ami-sql/db_upgrade.sh" www-data
 
 # Run cron_extra
-if [ -f "/home/ubuntu/cron_extra" ] ; then
+if [ -f "/home/ubuntu/cron_extra.sh" ] ; then
     echo Running cron_extra.sh
     sudo su -s "/home/ubuntu/cron_extra.sh" www-data
 fi
