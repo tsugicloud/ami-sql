@@ -65,8 +65,10 @@ if [ ! -d /efs/blobs ]; then
 fi
 
 # This takes way too long...
-# echo "Patching efs permissions"
-# chown -R www-data:www-data /efs
+echo "Patching efs permissions"
+chown www-data:www-data /efs
+chown www-data:www-data /efs/*
+chown www-data:www-data /efs/*/*
 
 # Construct the web
 cd /var/www/html/
