@@ -14,7 +14,8 @@ $mapping = array(
 // These are the keys not in config.dist
 $good_keys = array(
     'lessons', 'logo_url', 'context_title', 'badge_path',
-    'google_classroom_secret', 'privacy_url', 'sla_url'
+    'google_classroom_secret', 'privacy_url', 'sla_url',
+    'websocket_secret', 'websocket_url'
 );
 
 $overrides = '';
