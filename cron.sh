@@ -24,3 +24,10 @@ if [ -f "/home/ubuntu/cron_extra.sh" ] ; then
     sudo su -s "/home/ubuntu/cron_extra.sh" www-data
 fi
 
+# Run cron_extra_root
+if [ -f "/home/ubuntu/cron_extra_root.sh" ] ; then
+    echo Running cron_extra_root.sh
+    sudo su -s "/home/ubuntu/cron_extra_root.sh" root
+fi
+
+
