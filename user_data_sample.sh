@@ -3,21 +3,49 @@ echo Running user-data from `pwd` on `date "+%F-%T"`
 echo `pwd` > /tmp/user-data-`date "+%F-%T"`
 
 cat << EOF > /home/ubuntu/tsugi_env.sh
-export TSUGI_USER=apps_db_user
-export TSUGI_PASSWORD=APPS_PW_8973498
-export TSUGI_PDO="mysql:host=tsugi-cluster-1.cluster-ce43983889mk.us-east-2.rds.amazonaws.com;dbname=apps_db"
-export TSUGI_NFS_VOLUME=fs-439fd792.efs.us-east-2.amazonaws.com
-export TSUGI_ADMINPW=apps_admin_pw
+export MAIN_REPO=https://github.com/tsugicloud/website.git
 
-export DYNAMODB_KEY= 'AKIISDIUSDOUISDHFBUQ';
-export DYNAMODB_SECRET = 'zFKsdkjhkjskhjSAKJHsakjhSAKJHakjhdsasYaZ';
-export DYNAMODB_REGION = 'us-east-2';
+export TSUGI_USER=tsugicloud
+export TSUGI_PASSWORD=N5reoiui_OIUEROT
+export TSUGI_PDO="mysql:host=tsugi-serverless.cluster-ce51lfgjgflj.us-east-2.rds.amazonaws.com;dbname=tsugicloud"
+export TSUGI_NFS_VOLUME=fs-802398f9.efs.us-east-2.amazonaws.com
+export TSUGI_ADMINPW=tsugiFun
+
+export TSUGI_OWNERNAME=Learning Experiences
+export TSUGI_OWNEREMAIL=drchuck@learnxp.com
 
 export TSUGI_SETUP_GIT=yes
-export TSUGI_MAILDOMAIN=apps.lrnxp.net
-export TSUGI_APPHOME=https://apps.lrnxp.net
-export TSUGI_WWWROOT=https://apps.lrnxp.net/tsugi
-export TSUGI_SERVICENAME=LearnXP
+export TSUGI_MAILDOMAIN=www.tsugicloud.org
+export TSUGI_APPHOME=https://www.tsugicloud.org
+export TSUGI_WWWROOT=https://www.tsugicloud.org/tsugi
+export TSUGI_SERVICENAME=TsugiCloud
+
+export TSUGI_PRIVACY_URL=https://www.tsugicloud.org/about/policies/privacy
+export TSUGI_SLA_URL=https://www.tsugicloud.org/about/policies/service-level-agreement
+export TSUGI_LOGO_URL=https://www.tsugicloud.org/user/miniCloud_blackBack.png
+export TSUGI_PRIVACY_URL=https://www.tsugicloud.org/about/policies/privacy
+export TSUGI_SLA_URL=https://www.tsugicloud.org/about/policies/service-level-agreement
+export TSUGI_LOGO_URL=https://www.tsugicloud.org/user/miniCloud_blackBack.png
+
+export TSUGI_WEBSOCKET_SECRET=xyzzy
+export TSUGI_WEBSOCKET_URL=wss://socket.tsugicloud.org:443
+
+export TSUGI_GOOGLE_CLIENT_ID=1015059281328498ljdfhldfkhk45987fdkhjr.apps.googleusercontent.com
+export TSUGI_GOOGLE_CLIENT_SECRET=uFhjdffdhkhjdfkjhfddfkjh
+export TSUGI_MAP_API_KEY=AIkdkjhfdkjhdkUHASkjasIUHSAKJDHXjtPvtSM
+
+export TSUGI_GOOGLE_CLASSROOM_SECRET=609403direiudskj8398dsjdskh94
+
+export TSUGI_DYNAMODB_KEY=AOIUOIRORU8943KJHBUOIU
+export TSUGI_DYNAMODB_SECRET=zFdsjhucxew84dfj7cxi48df489df8fd9rFasYaZ
+export TSUGI_DYNAMODB_REGION=us-east-2
+
+# This matters because of Amazon Simple Mail Service
+export POSTFIX_MAIL_FROM=info@tsugicloud.org
+export POSTFIX_ORIGIN_DOMAIN=tsugicloud.org
+export POSTFIX_RELAYHOST='[email-smtp.us-east-1.amazonaws.com]:587'
+export POSTFIX_SASL_PASSWORD="[email-smtp.us-east-1.amazonaws.com]:587 AKIKJHDSKJHSDKJHXFVQ:Ahfdkjfdjkfdhjxh450980548n";
+
 EOF
 
 source /home/ubuntu/tsugi_env.sh
