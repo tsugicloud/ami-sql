@@ -22,23 +22,23 @@ Make an AMI by taking a snapshot of your EC2 instance once it is powered off.
 Creating the Necessary Services and Building the User Data
 ==========================================================
 
-Take a look at the "user_data.sh" file - make your own copy of it.  Once you edit it
+Take a look at the `user_data.sh` file - make your own copy of it.  Once you edit it
 do not check it into a public repo.
 
 Make an Aurora instance.  As you create the instance, you set up the master user name and password (effectively the
 MySQL root account). When this is done, you will want to log into an EC2 instance that is in the VPC
 and run the following commands to create the table and sub-account:
 
-   mysql -h tsugi-cluster-1.cluster-ce43983889mk.us-east-2.rds.amazonaws.com -u tsugi_root_account -p
-   (Enter the master password you created)
-   CREATE DATABASE apps_db DEFAULT CHARACTER SET utf8;
-   GRANT ALL ON apps_db.* TO 'apps_db_user'@'172.%' IDENTIFIED BY 'APPS_PW_8973498';
+    mysql -h tsugi-serverless.cluster-ce43983889mk.us-east-2.rds.amazonaws.com -u tsugi_root_account -p
+    (Enter the master password you created)
+    CREATE DATABASE apps_db DEFAULT CHARACTER SET utf8;
+    GRANT ALL ON apps_db.* TO 'apps_db_user'@'172.%' IDENTIFIED BY 'APPS_PW_8973498';
 
-Now you can set up the user_data for the database in the user_data.sh file:
+Now you can set up the `user_data` for the database in the `user_data.sh` file:
 
     export TSUGI_USER=apps_db_user
     export TSUGI_PASSWORD=APPS_PW_8973498
-    export TSUGI_PDO="mysql:host=tsugi-cluster-1.cluster-ce43983889mk.us-east-2.rds.amazonaws.com;dbname=apps_db"
+    export TSUGI_PDO="mysql:host=tsugi-serverless.cluster-ce43983889mk.us-east-2.rds.amazonaws.com;dbname=apps_db"
 
 Make an EFS volume and put its connection information into:
 
