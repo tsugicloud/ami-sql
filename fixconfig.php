@@ -11,13 +11,6 @@ $mapping = array(
   "map_api_key" => "google_map_api_key",
 );
 
-// These are the keys not in config.dist
-$good_keys = array(
-    'lessons', 'logo_url', 'context_title', 'badge_path',
-    'google_classroom_secret', 'privacy_url', 'sla_url',
-    'websocket_secret', 'websocket_url'
-);
-
 $overrides = '';
 foreach($_SERVER as $k => $v ) {
     if (strpos($k, 'TSUGI_') === false ) continue;
@@ -27,9 +20,7 @@ foreach($_SERVER as $k => $v ) {
     if ( is_numeric($v) ) $newv = $v;
     if ( $v == 'false' ) $newv = $v;
     if ( $v == 'true' ) $newv = $v;
-    if ( isset($CFG->{$p}) || in_array($p, $good_keys) ) {
-        $overrides .= '$'."CFG->$p = $newv;\n";
-    }
+    $overrides .= '$'."CFG->$p = $newv;\n";
 }
 
 $old = file_get_contents("php://stdin");

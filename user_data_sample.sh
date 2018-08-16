@@ -13,6 +13,8 @@ export TSUGI_ADMINPW=tsugiFun
 
 export TSUGI_OWNERNAME=Learning Experiences
 export TSUGI_OWNEREMAIL=drchuck@learnxp.com
+export TSUGI_PROVIDEKEYS=true
+export TSUGI_AUTOAPPROVEKEYS='/.+@.+\\.edu/'
 
 export TSUGI_SETUP_GIT=yes
 export TSUGI_MAILDOMAIN=www.tsugicloud.org
