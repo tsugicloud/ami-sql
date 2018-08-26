@@ -35,6 +35,9 @@ apt-get install -y libapache2-mod-php7.1 php7.1-mysql php7.1-curl php7.1-json
 apt-get install -y php7.1-mbstring php7.1-zip php7.1-xml php7.1-gd
 apt-get install -y php7.1-apc
 apt-get install -y php7.1-intl
+apt-get install -y php-memcached
+apt-get install -y php-memcache
+
 
 apt-get install -y mysql-client
 apt-get install -y nfs-common  # For EFS

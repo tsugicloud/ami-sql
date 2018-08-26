@@ -27,3 +27,6 @@ MAILTO=""
 
 5,10,15,20,25,30,35,40,45,50 * * * * bash -vx /home/ubuntu/cron.sh 2>&1 > /tmp/tsugi_cron5_output.log
 
+0 * * * * bash -vx /home/ubuntu/cron_hourly.sh 2>&1 > /tmp/tsugi_cron_hourly_output.log
+
+30 0 * * * bash -vx /home/ubuntu/cron_daily.sh 2>&1 > /tmp/tsugi_cron_daily.log
