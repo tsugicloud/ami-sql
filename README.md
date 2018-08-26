@@ -5,9 +5,13 @@ Building the AMI
 Make the pre-instance to make the ami
 
     EC2 Dashboard
-    ami-916f59f4 - Ubuntu Server 16.04 LTS (HVM), SSD Volume Type
+    ami-916f59f4 - Ubuntu Server 16.04 LTS (HVM), SSD Volume Type (2018-03-06)
     t2.micro
     don't put user data in for the pre-process
+
+You can use a later 16.04 server. My later instances are using this AMI:
+
+    ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-20180814 - ami-0552e3455b9bc8d50
 
 Once your EC2 Instance is up and running, log in and run the following sequence:
 
@@ -25,20 +29,15 @@ Creating the Necessary Services and Building the User Data
 Take a look at the `user_data.sh` file - make your own copy of it.  Once you edit it
 do not check it into a public repo.
 
-Make an Aurora instance.  As you create the instance, you set up the master user name and password (effectively the
-MySQL root account). When this is done, you will want to log into an EC2 instance that is in the VPC
-and run the following commands to create the table and sub-account:
+Make an Aurora instance.  As you create the instance, you set up the master user
+name and password (effectively the MySQL root account). When this is done, you
+will want to log into an EC2 instance that is in the VPC and run the following
+commands to create the table and sub-account:
 
     mysql -h tsugi-serverless.cluster-ce43983889mk.us-east-2.rds.amazonaws.com -u tsugi_root_account -p
     (Enter the master password you created)
     CREATE DATABASE apps_db DEFAULT CHARACTER SET utf8;
     GRANT ALL ON apps_db.* TO 'apps_db_user'@'172.%' IDENTIFIED BY 'APPS_PW_8973498';
-
-Now you can set up the `user_data` for the database in the `user_data.sh` file:
-
-    export TSUGI_USER=apps_db_user
-    export TSUGI_PASSWORD=APPS_PW_8973498
-    export TSUGI_PDO="mysql:host=tsugi-serverless.cluster-ce43983889mk.us-east-2.rds.amazonaws.com;dbname=apps_db"
 
 Make an EFS volume and put its connection information into:
 
@@ -76,6 +75,13 @@ Your IAM user will have a key and secret, and put them into the user data:
     export TSUGI_DYNAMODB_KEY= 'AKIISDIUSDOUISDHFBUQ';
     export TSUGI_DYNAMODB_SECRET = 'zFKsdkjhkjskhjSAKJHsakjhSAKJHakjhdsasYaZ';
     export TSUGI_DYNAMODB_REGION = 'us-east-2';
+
+Now you can set up the `user_data` for the database in the `user_data.sh` file.  Look at the
+sample `user_data.sh` file in this folder - it has commands like:
+
+    export TSUGI_USER=apps_db_user
+    export TSUGI_PASSWORD=APPS_PW_8973498
+    export TSUGI_PDO="mysql:host=tsugi-serverless.cluster-ce43983889mk.us-east-2.rds.amazonaws.com;dbname=apps_db"
 
 Setting up Email
 ================

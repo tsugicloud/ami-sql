@@ -69,8 +69,23 @@ if ( isset($CFG->apphome) ) {
     $CFG->install_folder = $CFG->dirroot.'/../mod';
 }
 
+// $CFG->memcache = 'tcp://memcache-tsugi.4984vw.cfg.use2.cache.amazonaws.com:11211';
+if ( isset($CFG->memcache) && strlen($CFG->memcache) > 0 ) {
+    ini_set('session.save_handler', 'memcache');
+    ini_set('session.save_path', $CFG->memcache);
+}
+
+// Note no "tcp://" for the memcached version of the url
+// $CFG->memcached = 'memcache-tsugi.4984vw.cfg.use2.cache.amazonaws.com:11211';
+if ( isset($CFG->memcached) && strlen($CFG->memcached) > 0 ) {
+    ini_set('session.save_handler', 'memcached');
+    ini_set('session.save_path', $CFG->memcached);
+}
+
 // http://docs.aws.amazon.com/aws-sdk-php/v2/guide/feature-dynamodb-session-handler.html
-if ( strlen($CFG->dynamodb_key) > 0 && strlen($CFG->dynamodb_secret) > 0 && strlen($CFG->dynamodb_region) > 0 ) {
+if ( isset($CFG->dynamodb_key) && isset($CFG->dynamodb_secret) && isset($CFG->dynamodb_region) &&
+     strlen($CFG->dynamodb_key) > 0 && strlen($CFG->dynamodb_secret) > 0 &&
+     strlen($CFG->dynamodb_region) > 0 ) {
     $CFG->sessions_in_dynamodb = true;
     if ( $CFG->sessions_in_dynamodb ) {
         $dynamoDb = \Aws\DynamoDb\DynamoDbClient::factory(
