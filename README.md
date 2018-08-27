@@ -23,6 +23,9 @@ Once your EC2 Instance is up and running, log in and run the following sequence:
 
 Make an AMI by taking a snapshot of your EC2 instance once it is powered off.
 
+* ami-sql  - May 1, 2018 - ami-5dc5f738 - from ami-916f59f4
+* ami-sql-2018-08-26 - ami-07c06ed1623829eed - from ami-0552e3455b9bc8d50
+
 Creating the Necessary Services and Building the User Data
 ==========================================================
 
