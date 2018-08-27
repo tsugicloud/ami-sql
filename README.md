@@ -29,7 +29,7 @@ Make an AMI by taking a snapshot of your EC2 instance once it is powered off.
 Creating the Necessary Services and Building the User Data
 ==========================================================
 
-Take a look at the `user_data.sh` file - make your own copy of it.  Once you edit it
+Take a look at the `user_data_sample.sh` file - make your own copy of it.  Once you edit it
 do not check it into a public repo.
 
 Make an Aurora instance.  As you create the instance, you set up the master user
@@ -42,49 +42,27 @@ commands to create the table and sub-account:
     CREATE DATABASE apps_db DEFAULT CHARACTER SET utf8;
     GRANT ALL ON apps_db.* TO 'apps_db_user'@'172.%' IDENTIFIED BY 'APPS_PW_8973498';
 
-Make an EFS volume and put its connection information into:
-
-    export TSUGI_NFS_VOLUME=fs-439fd792.efs.us-east-2.amazonaws.com
-
-Set up a DynamoDB service and make a table:
-
-    Table name: sessions
-    Primary key: id
-
-I set the read and write levels to 5/second and enable autoscaling.
-
-Look on the DynamoDB table screen to find the arn for the table ARN and then go to IAM and create
-an IAM User that has the following powers (changing the arn of course):
-
-    {
-        "Version": "2012-10-17",
-        "Statement": [
-            {
-                "Action": [
-                    "dynamodb:GetItem",
-                    "dynamodb:UpdateItem",
-                    "dynamodb:DeleteItem",
-                    "dynamodb:Scan",
-                    "dynamodb:BatchWriteItem"
-                ],
-                "Effect": "Allow",
-                "Resource": "arn:aws:dynamodb:us-east-2:681234576555:table/sessions"
-            }
-        ]
-    }
-
-Your IAM user will have a key and secret, and put them into the user data:
-
-    export TSUGI_DYNAMODB_KEY= 'AKIISDIUSDOUISDHFBUQ';
-    export TSUGI_DYNAMODB_SECRET = 'zFKsdkjhkjskhjSAKJHsakjhSAKJHakjhdsasYaZ';
-    export TSUGI_DYNAMODB_REGION = 'us-east-2';
-
 Now you can set up the `user_data` for the database in the `user_data.sh` file.  Look at the
 sample `user_data.sh` file in this folder - it has commands like:
 
     export TSUGI_USER=apps_db_user
     export TSUGI_PASSWORD=APPS_PW_8973498
     export TSUGI_PDO="mysql:host=tsugi-serverless.cluster-ce43983889mk.us-east-2.rds.amazonaws.com;dbname=apps_db"
+
+Make an EFS volume and put its connection information into:
+
+    export TSUGI_NFS_VOLUME=fs-439fd792.efs.us-east-2.amazonaws.com
+
+Make a single-node ElasticCache / Memcache server. I use a t2.small and it has plenty of power
+and memory since PHP sessions in Tsugi are pretty small.  Tsugi does not yet like a cluster
+of memcache servers - so just make one of the correct size.  Watch things like free memory
+on a Cloudwatch dashboard - you will likely find that it is very relaxed.  Configure in
+your `user-data.sh` as follows:
+
+    export TSUGI_MEMCACHED=tsugi-memcache.9f8gf8.cfg.use2.cache.amazonaws.com:11211
+
+I switched from DynamoDB to Memcache since memcache was simpler and faster.  I have the old
+DynamoDB instructions at the end of this document.
 
 Setting up Email
 ================
@@ -127,7 +105,8 @@ I think you can use the same IAM user for more than one domain.
 Making an EC2 Instance Using the AMI
 ====================================
 
-To build your EC2 Instance, make a new instance and start with the AMI you created above.
+To build your EC2 Instance, make a new instance and start with the AMI you created above.  Or start with
+one of the official AMIs (if we make them available).
 
 Put in the user data under Advanced - copy everything from the "#! /bin/bash" to the end of the file.
 When the EC2 provisioning process sees the hashbang, it runs the user data as a shell script.
@@ -141,13 +120,13 @@ After it comes up - you can see the post-ami process output in:
 Making an Autoscaling Group Using the AMI
 =========================================
 
-It is good for testing to make your Launch Configuration and AutoScaling Group without
+It is good for testing to intiially make your Launch Configuration and AutoScaling Group without
 automatically adding them to your Target Group for your ELB.  This way you can get things
 right and verify by going to the IP address in the web browser and SSHing in to look around
 before you add it to the Target Group.
 
-First make a Launch Configuration exactly like apinning spinning up an EC2 instance.  Then make
-an autoscaling group that uses that launch configuration.  You can't exit a Launch Configuration
+First make a Launch Configuration exactly like spinning spinning up an EC2 instance.  Then make
+an autoscaling group that uses that launch configuration.  You can't edit a Launch Configuration
 but you can copy a Launch Config and make a new one to tweak.
 
 A good testing trick as you make and test new launch configurations is to edit the ASG and
@@ -156,16 +135,6 @@ down.
 
 References
 ==========
-
-About DynamoDB and PHP Sessions:
-
-    https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/service_dynamodb-session-handler.html
-
-About DynamoDB setup:
-
-https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/SettingUp.DynamoWebService.html
-https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/authentication-and-access-control.html
-
 
 About EFS and /etc/fstab
 
@@ -176,4 +145,55 @@ https://docs.aws.amazon.com/efs/latest/ug/mount-fs-auto-mount-onreboot.html#moun
 About Verifying a Domain with SES
 
 https://docs.aws.amazon.com/ses/latest/DeveloperGuide/verify-domain-procedure.html
+
+
+Archive: Using DymanmoDB
+========================
+
+This is now archived since I like Memcache better.
+
+Set up a DynamoDB service and make a table:
+
+    Table name: sessions
+    Primary key: id
+    TTL field: expires
+
+I set the read and write levels to 5/second and enable autoscaling.
+
+Look on the DynamoDB table screen to find the arn for the table ARN and then go to IAM and create
+an IAM User that has the following powers (changing the arn of course):
+
+    {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Action": [
+                    "dynamodb:GetItem",
+                    "dynamodb:UpdateItem",
+                    "dynamodb:DeleteItem",
+                    "dynamodb:Scan",
+                    "dynamodb:BatchWriteItem"
+                ],
+                "Effect": "Allow",
+                "Resource": "arn:aws:dynamodb:us-east-2:681234576555:table/sessions"
+            }
+        ]
+    }
+
+Your IAM user will have a key and secret, and put them into the user data:
+
+    export TSUGI_DYNAMODB_KEY= 'AKIISDIUSDOUISDHFBUQ';
+    export TSUGI_DYNAMODB_SECRET = 'zFKsdkjhkjskhjSAKJHsakjhSAKJHakjhdsasYaZ';
+    export TSUGI_DYNAMODB_REGION = 'us-east-2';
+
+About DynamoDB and PHP Sessions:
+
+    https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/service_dynamodb-session-handler.html
+
+About DynamoDB setup:
+
+   https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/SettingUp.DynamoWebService.html
+   https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/authentication-and-access-control.html
+
+   https://stackoverflow.com/questions/50848255/for-php-sessions-stored-in-dynamodb-can-i-use-the-expires-field-with-the-auto/
 

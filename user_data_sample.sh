@@ -38,9 +38,7 @@ export TSUGI_MAP_API_KEY=AIkdkjhfdkjhdkUHASkjasIUHSAKJDHXjtPvtSM
 
 export TSUGI_GOOGLE_CLASSROOM_SECRET=609403direiudskj8398dsjdskh94
 
-export TSUGI_DYNAMODB_KEY=AOIUOIRORU8943KJHBUOIU
-export TSUGI_DYNAMODB_SECRET=zFdsjhucxew84dfj7cxi48df489df8fd9rFasYaZ
-export TSUGI_DYNAMODB_REGION=us-east-2
+export TSUGI_MEMCACHED=tsugi-memcache.9f8gf8.cfg.use2.cache.amazonaws.com:11211
 
 # This matters because of Amazon Simple Mail Service
 export POSTFIX_MAIL_FROM=info@tsugicloud.org
