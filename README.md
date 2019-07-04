@@ -5,26 +5,22 @@ Building the AMI
 Make the pre-instance to make the ami
 
     EC2 Dashboard
-    ami-916f59f4 - Ubuntu Server 16.04 LTS (HVM), SSD Volume Type (2018-03-06)
+    Ubuntu Server 16.04 LTS (HVM), SSD Volume Type - ami-0f93b5fd8f220e428 (2019-07-03)
+    Old: ami-916f59f4 - Ubuntu Server 16.04 LTS (HVM), SSD Volume Type ami-916f59f4 (2018-03-06)
     t2.micro
     don't put user data in for the pre-process
 
-You can use a later 16.04 server. My later instances are using this AMI:
-
-    ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-20180814 - ami-0552e3455b9bc8d50
-
 Once your EC2 Instance is up and running, log in and run the following sequence:
 
+    ssh ubuntu@13.59.45.131
     sudo bash
+    pwd    # /home/ubuntu
     git clone https://github.com/tsugicloud/ami-sql.git
     cd ami-sql
     bash pre-ami.sh
     systemctl poweroff
 
 Make an AMI by taking a snapshot of your EC2 instance once it is powered off.
-
-* ami-sql  - May 1, 2018 - ami-5dc5f738 - from ami-916f59f4
-* ami-sql-2018-08-26 - ami-07c06ed1623829eed - from ami-0552e3455b9bc8d50
 
 Creating the Necessary Services and Building the User Data
 ==========================================================
@@ -60,9 +56,6 @@ on a Cloudwatch dashboard - you will likely find that it is very relaxed.  Confi
 your `user-data.sh` as follows:
 
     export TSUGI_MEMCACHED=tsugi-memcache.9f8gf8.cfg.use2.cache.amazonaws.com:11211
-
-I switched from DynamoDB to Memcache since memcache was simpler and faster.  I have the old
-DynamoDB instructions at the end of this document.
 
 Setting up Email
 ================
