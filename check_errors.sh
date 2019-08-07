@@ -33,7 +33,7 @@ rm -f $NEWERRORS
 
 # egrep 'DIE: |PHP Parse error: |PHP Fatal error:|PHP Notice:|PHP Warning:|Grade NOT updated|Grade failure|Failure to store grade|Missing required result data|Missing required session data|Session not set up for grade return|Grade Exception:|Grade read failure:|Fatal XML' $LOGFILE > /tmp/csev-$host-current-errors
 
-egrep 'DIE: |SQLSTATE|accounts.google.com|store/index.php?type=|PHP Parse error:|PHP Fatal error:|PHP Notice:|PHP Warning:|Grade NOT updated|Grade failure|Failure to store grade|Missing required result data|Missing required session data|Session not set up for grade return|Grade Exception:|Grade read failure:|Fatal XML' $LOGFILE | egrep -v 'failure_is_expected|Undefined property: MyClass2::.priv|Session in login|Heartbeat' > $NEWERRORS
+egrep 'DIE: |SQLSTATE|accounts.google.com|store/index.php?type=|PHP Parse error:|PHP Fatal error:|PHP Notice:|PHP Warning:|Grade NOT updated|Grade failure|Failure to store grade|Missing required result data|Missing required session data|Session not set up for grade return|Grade Exception:|Grade read failure:|Fatal XML' $LOGFILE | egrep -v 'This tool should be launched from|Session expired|failure_is_expected|Undefined property: MyClass2::.priv|Session in login|Heartbeat' > $NEWERRORS
 
 lines=`cat $NEWERRORS | wc -l`
 startpos=`cat $OLDERRORS | wc -l`
