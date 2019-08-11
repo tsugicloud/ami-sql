@@ -5,8 +5,9 @@ Building the AMI
 Make the pre-instance to make the ami
 
     EC2 Dashboard
-    Ubuntu Server 16.04 LTS (HVM), SSD Volume Type - ami-0f93b5fd8f220e428 (2019-07-03)
-    Old: ami-916f59f4 - Ubuntu Server 16.04 LTS (HVM), SSD Volume Type ami-916f59f4 (2018-03-06)
+    Ubuntu Server 18.04 LTS (HVM), SSD Volume Type - ami-05c1fa8df71875112 (Since 2019-08-11)
+    Old: Ubuntu Server 16.04 LTS (HVM), SSD Volume Type - ami-0f93b5fd8f220e428 (Since 2019-07-03)
+    Older: ami-916f59f4 - Ubuntu Server 16.04 LTS (HVM), SSD Volume Type ami-916f59f4 (Since 2018-03-06)
     t2.micro
     don't put user data in for the pre-process
 
@@ -18,9 +19,13 @@ Once your EC2 Instance is up and running, log in and run the following sequence:
     git clone https://github.com/tsugicloud/ami-sql.git
     cd ami-sql
     bash pre-ami.sh
+    # Navigate to http://13.59.45.131 make sure you see the empty Apache screen...
     systemctl poweroff
 
 Make an AMI by taking a snapshot of your EC2 instance once it is powered off.
+Name it something like:
+
+    tsugi-ubuntu18.04-php7.3-2019-08-11
 
 Creating the Necessary Services and Building the User Data
 ==========================================================
