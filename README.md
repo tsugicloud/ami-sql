@@ -113,7 +113,8 @@ To debug the install process, you might find it useful to look at:
 
 After it comes up - you can see the post-ami process output in:
 
-    /var/log/cloud-init-output.log
+    ssh ubuntu@3.15.21.67
+    tail -f /var/log/cloud-init-output.log
 
 Making an Autoscaling Group Using the AMI
 =========================================
