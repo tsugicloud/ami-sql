@@ -180,6 +180,9 @@ chmod 600 /var/spool/cron/crontabs/ubuntu
 
 service cron restart
 
+# Patch permissions (again)
+chown -R www-data:www-data /var/www/html
+
 echo Setting Apache to auto-start on reboot
 update-rc.d apache2 defaults
 
