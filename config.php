@@ -59,6 +59,11 @@ $CFG->dynamodb_key = false; // 'AKIISDIUSDOUISDHFBUQ';
 $CFG->dynamodb_secret = false; // 'zFKsdkjhkjskhjSAKJHsakjhSAKJHakjhdsasYaZ';
 $CFG->dynamodb_region = false; // 'us-east-2'
 
+$CFG->expire_pii_days = 150;  // Three months
+$CFG->expire_user_days = 400;  // One year
+$CFG->expire_context_days = 600; // 1.5 Years
+$CFG->expire_tenant_days = 800; // Two years
+
 // Overrides from env vars will be inserted here - do not change the line below
 
 // ---OVERRIDES---
