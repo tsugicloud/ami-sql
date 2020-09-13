@@ -30,4 +30,6 @@ if [ -f "/home/ubuntu/cron_extra.sh" ] ; then
     sudo su -s "/home/ubuntu/cron_extra.sh" www-data
 fi
 
+# Clean up the apt-get stuff if any auto-upgrade process runs
+sudo su -s "/home/ubuntu/patch_ami.sh" root
 
