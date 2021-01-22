@@ -87,6 +87,9 @@ if ( isset($CFG->memcached) && strlen($CFG->memcached) > 0 ) {
     ini_set('session.save_path', $CFG->memcached);
     // https://github.com/php-memcached-dev/php-memcached/issues/269
     ini_set('memcached.sess_locking', '0');
+    // https://stackoverflow.com/questions/35728486/read-php-session-without-actually-starting-it
+    ini_set('memcached.serializer', 'php');
+    ini_set('session.serialize_handler', 'php_serialize');
 }
 
 // http://docs.aws.amazon.com/aws-sdk-php/v2/guide/feature-dynamodb-session-handler.html
