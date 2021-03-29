@@ -11,7 +11,9 @@ env
 echo ======= Update 1
 apt-get update 
 
-apt-get install -y build-essential python-software-properties software-properties-common
+apt-get install -y build-essential
+apt-get install -y python-software-properties
+apt-get install -y software-properties-common
 apt-get install -y byobu curl git htop man unzip vim wget
 apt-get install -y ca-certificates
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
@@ -30,11 +32,11 @@ apt-get install -y apache2
 
 # apt-cache search php7
 
-apt-get install -y php7.4
-apt-get install -y libapache2-mod-php7.4 php7.4-mysql php7.4-curl php7.4-json
-apt-get install -y php7.4-mbstring php7.4-zip php7.4-xml php7.4-gd
-apt-get install -y php7.4-apc php7.4-intl
-apt-get install -y php7.4-memcache php7.4-memcached
+apt-get install -y php7.3
+apt-get install -y libapache2-mod-php7.3 php7.3-mysql php7.3-curl php7.3-json
+apt-get install -y php7.3-mbstring php7.3-zip php7.3-xml php7.3-gd
+apt-get install -y php7.3-apc php7.3-intl
+apt-get install -y php-memcached php-memcache
 
 
 apt-get install -y mysql-client
