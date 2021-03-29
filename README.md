@@ -5,27 +5,35 @@ Building the AMI
 Make the pre-instance to make the ami
 
     EC2 Dashboard
-    Ubuntu Server 18.04 LTS (HVM), SSD Volume Type - ami-05c1fa8df71875112 (Since 2019-08-11)
-    Old: Ubuntu Server 16.04 LTS (HVM), SSD Volume Type - ami-0f93b5fd8f220e428 (Since 2019-07-03)
-    Older: ami-916f59f4 - Ubuntu Server 16.04 LTS (HVM), SSD Volume Type ami-916f59f4 (Since 2018-03-06)
+    ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20210223 - ami-08962a4068733a2b6 (Since 2021-03-21)
+    Old: Ubuntu Server 18.04 LTS (HVM), SSD Volume Type - ami-05c1fa8df71875112 (Since 2019-08-11)
+    Older: Ubuntu Server 16.04 LTS (HVM), SSD Volume Type - ami-0f93b5fd8f220e428 (Since 2019-07-03)
     t2.micro
     don't put user data in for the pre-process
 
 Once your EC2 Instance is up and running, log in and run the following sequence:
 
-    ssh ubuntu@13.59.45.131
+    ssh ubuntu@3.15.176.126
     sudo bash
     pwd    # /home/ubuntu
     git clone https://github.com/tsugicloud/ami-sql.git
     cd ami-sql
     bash pre-ami.sh
-    # Navigate to http://13.59.45.131 make sure you see the empty Apache screen...
+    # Navigate to http://3.15.176.126 make sure you see the empty Apache screen...
     systemctl poweroff
 
-Make an AMI by taking a snapshot of your EC2 instance once it is powered off.
-Name it something like:
+Make an AMI by taking a snapshot of your EC2 instance once it is powered off and
+has stopped.  
 
-    tsugi-ubuntu18.04-php7.3-2019-08-11
+    chuck-tsugi-ubuntu20.04-php7.4-2021-03-21
+
+If you are not making an official release AMI, please don't start it with "tsugi-".
+official releases look like:
+
+    tsugi-php-prod-2021-03-21-ubuntu20.04-php7.4
+
+You will get an instance id like `ami-081eb8abf28330636` - if it is an official release
+make sure to set it to public after it is created.
 
 Creating the Necessary Services and Building the User Data
 ==========================================================
