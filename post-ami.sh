@@ -1,3 +1,5 @@
+#! /bin/bash
+
 echo Running post-ami `date "+%F-%T"`
 touch /tmp/post-ami-`date "+%F-%T"`
 

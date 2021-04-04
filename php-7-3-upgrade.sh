@@ -1,3 +1,5 @@
+#! /bin/bash
+
 #
 # This is a way to upgrade to PHP 7.3
 #

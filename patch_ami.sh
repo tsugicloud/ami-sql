@@ -1,3 +1,4 @@
+#! /bin/bash
 
 echo "Making sure we don't fill disk with old AMI bits"
 
