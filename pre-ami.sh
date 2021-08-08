@@ -3,6 +3,7 @@
 
 # Start from https://github.com/tsugiproject/tsugi-build/docker/base/tsugi-base-prepare.sh
 # /Users/csev/dev/tsugi-build/docker/base/tsugi-base-prepare.sh
+# Stop after certbot - don't do postfix
 
 sed -i 's/# \(.*multiverse$\)/\1/g' /etc/apt/sources.list
 export DEBIAN_FRONTEND=noninteractive
@@ -55,15 +56,8 @@ snap refresh core
 snap install --classic certbot
 ln -s /snap/bin/certbot /usr/bin/certbot
 
-echo ======= Installing Postfix
-echo "postfix postfix/mailname string example.com" | debconf-set-selections
-echo "postfix postfix/main_mailer_type string 'Internet Site'" | debconf-set-selections
-apt-get install -y mailutils
+# End from https://github.com/tsugiproject/tsugi-build/docker/base/tsugi-base-prepare.sh
 
-echo ====== Check out build scripts if they are not already there
-if [ ! -d "/root/tsugi-build" ]; then
-    git clone https://github.com/tsugiproject/tsugi-build.git /root/tsugi-build
-fi
 echo ======= Cleanup Start
 df
 apt-get -y autoclean
@@ -73,7 +67,6 @@ rm -rf /var/lib/apt/lists/*
 echo ======= Cleanup Done
 df
 echo ======= Cleanup Done
-# End from https://github.com/tsugiproject/tsugi-build/docker/base/tsugi-base-prepare.sh
 
 cp apache2.conf /etc/apache2
 
