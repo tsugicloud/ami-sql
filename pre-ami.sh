@@ -27,7 +27,6 @@ echo ======= Update 2
 apt update
 add-apt-repository -y ppa:ondrej/php
 add-apt-repository -y ppa:ondrej/apache2
-# https://certbot.eff.org/lets-encrypt/ubuntubionic-apache
 add-apt-repository -y universe
 apt update
 apt-get install -y apache2
@@ -40,10 +39,11 @@ apt-get install -y php8.0-memcached php8.0-memcache
 a2enmod -q rewrite dir expires headers
 phpenmod mysqlnd pdo_mysql intl
 
-echo === Installing certbot
+echo === Installing certbot - https://certbot.eff.org/lets-encrypt/ubuntufocal-apache
 snap install core
 snap refresh core
 snap install --classic certbot
+ln -s /snap/bin/certbot /usr/bin/certbot
 
 echo ======= Installing Node and Friends
 apt-get install -y nodejs
