@@ -12,6 +12,7 @@ Make the pre-instance to make the ami
 
     t2.micro
     don't put user data in for the pre-process
+    user the default VPC security group so you can test port 80
 
 Once your EC2 Instance is up and running, log in and run the following sequence:
 

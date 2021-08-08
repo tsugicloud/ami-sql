@@ -18,23 +18,24 @@ echo ======= Update 2
 apt update
 add-apt-repository -y ppa:ondrej/php
 add-apt-repository -y ppa:ondrej/apache2
-add-apt-repository -y ppa:certbot/certbot
+add-apt-repository -y -r ppa:certbot/certbot
 
 echo ======= Update 3
 apt update
 
+# from docker/base/tsugi-base-prepare.sh
+
 apt-get install -y apache2
-apt-get install -y mysql-client
+apt-get install -y mysql-client-8.0
 apt-get install -y nfs-common  # For EFS
 
-# apt-cache search php7
-
 apt-get install -y php8.0
-apt-get install -y libapache2-mod-php8.0 php8.0-mysql php8.0-curl php8.0-json
+apt-get install -y libapache2-mod-php8.0 php8.0-mysql php8.0-curl
 apt-get install -y php8.0-mbstring php8.0-zip php8.0-xml php8.0-gd
-apt-get install -y php8.0-apc php8.0-intl
-apt-get install -y php8.0-memcache php8.0-memcached
-
+apt-get install -y php8.0-apcu
+apt-get install -y php8.0-intl
+apt-get install -y php8.0-memcached php8.0-memcache
+apt-get install -y certbot python-certbot-apache
 a2enmod -q rewrite dir expires headers
 phpenmod mysqlnd pdo_mysql intl
 
