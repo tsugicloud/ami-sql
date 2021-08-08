@@ -29,7 +29,6 @@ add-apt-repository -y ppa:ondrej/php
 add-apt-repository -y ppa:ondrej/apache2
 # https://certbot.eff.org/lets-encrypt/ubuntubionic-apache
 add-apt-repository -y universe
-add-apt-repository -y -r ppa:certbot/certbot
 apt update
 apt-get install -y apache2
 apt-get install -y php8.0
@@ -38,9 +37,13 @@ apt-get install -y php8.0-mbstring php8.0-zip php8.0-xml php8.0-gd
 apt-get install -y php8.0-apcu
 apt-get install -y php8.0-intl
 apt-get install -y php8.0-memcached php8.0-memcache
-apt-get install -y certbot python-certbot-apache
 a2enmod -q rewrite dir expires headers
 phpenmod mysqlnd pdo_mysql intl
+
+echo === Installing certbot
+snap install core
+snap refresh core
+snap install --classic certbot
 
 echo ======= Installing Node and Friends
 apt-get install -y nodejs
