@@ -16,13 +16,13 @@ Make the pre-instance to make the ami
 
 Once your EC2 Instance is up and running, log in and run the following sequence:
 
-    ssh ubuntu@3.15.176.126
+    ssh ubuntu@3.16.15.28
     sudo bash
     pwd    # /home/ubuntu
     git clone https://github.com/tsugicloud/ami-sql.git
     cd ami-sql
     bash pre-ami.sh
-    # Navigate to http://3.15.176.126 make sure you see the empty Apache screen...
+    # Navigate to http://3.16.15.28 make sure you see the empty Apache screen...
     systemctl poweroff
 
 Make an AMI by taking a snapshot of your EC2 instance once it is powered off and
