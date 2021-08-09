@@ -47,7 +47,9 @@ node --version
 apt-get install -y npm
 # https://phoenixnap.com/kb/update-node-js-version
 npm install -g n
+PATH="$PATH"
 n stable
+PATH="$PATH"
 
 npm --version
 echo === Installing certbot - https://certbot.eff.org/lets-encrypt/ubuntufocal-apache
