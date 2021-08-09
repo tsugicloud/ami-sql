@@ -44,6 +44,8 @@ echo ======= Installing Node and Friends
 apt-get install -y nodejs
 node --version
 apt-get install -y npm
+npm install -g n
+n stable
 
 npm --version
 echo === Installing certbot - https://certbot.eff.org/lets-encrypt/ubuntufocal-apache
