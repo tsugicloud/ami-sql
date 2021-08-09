@@ -1,7 +1,7 @@
 # Setup a scalable app server instance behind ELB
 # Leave hostname alone
 
-source ./tsugi-base-software
+source ./tsugi-base-software.sh
 
 echo ======= Cleanup Start
 df
