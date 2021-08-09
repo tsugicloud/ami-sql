@@ -190,4 +190,6 @@ update-rc.d apache2 defaults
 
 echo Starting Apache
 /usr/sbin/apachectl start
+# In case we were already started
+/usr/sbin/apachectl restart
 

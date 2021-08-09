@@ -5,38 +5,51 @@ Building the AMI
 Make the pre-instance to make the ami
 
     EC2 Dashboard
-    ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20210223 - ami-08962a4068733a2b6 (Since 2021-03-21)
-    Old: Ubuntu Server 18.04 LTS (HVM), SSD Volume Type - ami-05c1fa8df71875112 (Since 2019-08-11)
-    Older: Ubuntu Server 16.04 LTS (HVM), SSD Volume Type - ami-0f93b5fd8f220e428 (Since 2019-07-03)
+    ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20210430 - ami-00399ec92321828f5 (Since 2021-08-21)
+
+        Old: ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20210223 - ami-08962a4068733a2b6 (Since 2021-03-21)
+        Older: Ubuntu Server 18.04 LTS (HVM), SSD Volume Type - ami-05c1fa8df71875112 (Since 2019-08-11)
+
     t2.micro
     don't put user data in for the pre-process
+    user the default VPC security group so you can test port 80
 
 Once your EC2 Instance is up and running, log in and run the following sequence:
 
-    ssh ubuntu@3.15.176.126
+    ssh ubuntu@3.16.15.28
     sudo bash
     pwd    # /home/ubuntu
     git clone https://github.com/tsugicloud/ami-sql.git
     cd ami-sql
     bash pre-ami.sh
-    # Navigate to http://3.15.176.126 make sure you see the empty Apache screen...
+    # Navigate to http://3.16.15.28 make sure you see the empty Apache screen...
     systemctl poweroff
 
 Make an AMI by taking a snapshot of your EC2 instance once it is powered off and
 has stopped.  
 
-    chuck-tsugi-ubuntu20.04-php7.4-2021-03-21
+    chuck-tsugi-ubuntu20.04-php8.0-2021-03-21
 
 If you are not making an official release AMI, please don't start it with "tsugi-".
 official releases look like:
 
-    tsugi-php-prod-2021-03-21-ubuntu20.04-php7.4
+    tsugi-php-prod-2021-03-21-ubuntu20.04-php8.0
 
 You will get an instance id like `ami-081eb8abf28330636` - if it is an official release
 make sure to set it to public after it is created.
 
+Non AMI Builds
+--------------
+
+This process is specifically to build a reusable AMI that can be used to quckly deploy Tsugi servers
+from an AMI. There is a more flexible build process that is more generic (i.e. build docker containers
+or just run the software on Digital Ocean) documented at https://github.com/tsugiproject/tsugi-build/
+
+The commands in `pre-ami.sh` are similar to the commands
+in https://github.com/tsugiproject/tsugi-build/blob/master/docker/base/tsugi-base-prepare.sh
+
 Creating the Necessary Services and Building the User Data
-==========================================================
+----------------------------------------------------------
 
 Take a look at the `user_data_sample.sh` file - make your own copy of it.  Once you edit it
 do not check it into a public repo.
@@ -71,7 +84,7 @@ your `user-data.sh` as follows:
     export TSUGI_MEMCACHED=tsugi-memcache.9f8gf8.cfg.use2.cache.amazonaws.com:11211
 
 Setting up Email
-================
+----------------
 
 We need to enable outbound mail using Amazon's Simple Email Service:
 
@@ -109,7 +122,7 @@ Add these records to the `user_data.sh` for the servers.
 I think you can use the same IAM user for more than one domain.
 
 Making an EC2 Instance Using the AMI
-====================================
+------------------------------------
 
 To build your EC2 Instance, make a new instance and start with the AMI you created above.  Or start with
 one of the official AMIs (if we make them available).
@@ -125,7 +138,7 @@ After it comes up - you can see the post-ami process output in:
     tail -f /var/log/cloud-init-output.log
 
 Making an Autoscaling Group Using the AMI
-=========================================
+-----------------------------------------
 
 It is good for testing to intiially make your Launch Configuration and AutoScaling Group without
 automatically adding them to your Target Group for your ELB.  This way you can get things
@@ -141,7 +154,7 @@ switch from desired=1, min=1, max=1 and desired=0, min=0, max=0 to bring the ins
 down.  
 
 References
-==========
+----------
 
 About EFS and /etc/fstab
 
