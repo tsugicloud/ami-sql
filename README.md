@@ -28,12 +28,12 @@ Once your EC2 Instance is up and running, log in and run the following sequence:
 Make an AMI by taking a snapshot of your EC2 instance once it is powered off and
 has stopped.  
 
-    chuck-tsugi-ubuntu20.04-php8.0-2021-03-21
+    chuck-tsugi-ubuntu20.04-php8.0-2021-08-16
 
 If you are not making an official release AMI, please don't start it with "tsugi-".
 official releases look like:
 
-    tsugi-php-prod-2021-03-21-ubuntu20.04-php8.0
+    tsugi-php-prod-2021-08-16-ubuntu20.04-php8.0
 
 You will get an instance id like `ami-081eb8abf28330636` - if it is an official release
 make sure to set it to public after it is created.
