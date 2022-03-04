@@ -6,6 +6,19 @@ export LC_ALL=C.UTF-8
 locale -a
 env
 
+echo
+echo If you have problems with the apt-get install complaining about versions and you
+echo have upgraded from ubuntu 18 to ubuntu 20, take a look at this stack overflow article
+echo
+echo https://askubuntu.com/questions/111645/whats-the-best-way-to-re-enable-ppas-repos-after-an-upgrade
+echo
+echo You may need to uncomment some lines in the list files to get the PPAs re-enabled
+echo
+echo But first just let the script run see if the new Ubuntu 20 PPAs get added in the script
+echo
+echo If PHP 7.4 fails to install - come back here
+echo
+
 echo ======= Update 1
 apt-get update
 
@@ -28,17 +41,24 @@ apt-get install php7.4 libapache2-mod-php7.4 php7.4-cli php7.4-opcache php7.4-re
 
 cat << EOF
 
-If the software installed correctly, do the following steps manually to switch php versions:
+If you have problems with the apt-get install complaining about versions and you
+have upgraded from ubuntu 18 to ubuntu 20, take a look at this stack overflow article
+
+https://askubuntu.com/questions/111645/whats-the-best-way-to-re-enable-ppas-repos-after-an-upgrade
+
+If PHP 7.4 was installed correctly, 
+
+To make sure you are running PHP 7.4 at the command line use
+
+update-alternatives --config php
+
+If that works , do the following steps manually to switch php versions in Apache:
 
 a2dismod php7.3
 a2enmod php7.4
 systemctl restart apache2
 
 Then check with info.php to make sure you have PHP 7.4
-
-To make sure you are running PHP 7.4 at the command line use
-
-update-alternatives --config php
 
 EOF
 
