@@ -6,8 +6,6 @@ export LC_ALL=C.UTF-8
 locale -a
 env
 
-# If you are using this script
-
 echo ======= Update 1
 apt-get update
 
