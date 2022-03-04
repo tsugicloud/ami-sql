@@ -9,7 +9,7 @@ env
 # If you are using this script
 
 echo ======= Update 1
-apt-get update 
+apt-get update
 
 apt-get install -y build-essential python-software-properties software-properties-common
 apt-get install -y byobu curl git htop man unzip vim wget
@@ -20,20 +20,13 @@ echo ======= Update 2
 apt-get update
 add-apt-repository -y ppa:ondrej/php
 add-apt-repository -y ppa:ondrej/apache2
-add-apt-repository -y ppa:certbot/certbot
 
 echo ======= Update 3
 apt-get update
 
-apt-get install -y apache2
+echo This is intended to be run interactively
 
-# apt-cache search php7
-
-apt-get install -y php7.4
-apt-get install -y libapache2-mod-php7.4 php7.4-mysql php7.4-curl php7.4-json
-apt-get install -y php7.4-mbstring php7.4-zip php7.4-xml php7.4-gd
-apt-get install -y php7.4-apc php7.4-intl
-apt-get install -y php7.4-memcache php7.4-memcached
+apt-get install php7.4 libapache2-mod-php7.4  php7.4-common php7.4-mysql php7.4-curl php7.4-json php7.4-mbstring php7.4-zip php7.4-xml php7.4-gd php7.4-apc php7.4-intl php7.4-memcache php7.4-memcached
 
 cat << EOF
 
