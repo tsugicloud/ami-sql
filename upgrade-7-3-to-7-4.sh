@@ -6,16 +6,6 @@ export LC_ALL=C.UTF-8
 locale -a
 env
 
-echo
-echo If you have problems with the apt-get install complaining about versions and you
-echo have upgraded from ubuntu 18 to ubuntu 20, take a look at this stack overflow article
-echo
-echo https://askubuntu.com/questions/111645/whats-the-best-way-to-re-enable-ppas-repos-after-an-upgrade
-echo
-echo You may need to uncomment some lines in the list files to get the PPAs re-enabled
-echo
-echo But first just let the script run see if the new Ubuntu 20 PPAs get added in the script
-echo
 
 echo ======= Update 1
 apt-get update
@@ -58,9 +48,12 @@ else
 cat << EOF
 
 If you have problems with the apt-get install complaining about versions and you
-have upgraded from ubuntu 18 to ubuntu 20, take a look at this stack overflow article
+have upgraded this server from ubuntu 18 to ubuntu 20, take a look at this stack overflow article
 
 https://askubuntu.com/questions/111645/whats-the-best-way-to-re-enable-ppas-repos-after-an-upgrade
+
+You may need to uncomment some lines in the list files to get the PPAs re-enabled
+
 EOF
 fi
 
