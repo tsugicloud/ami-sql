@@ -26,7 +26,7 @@ apt-get update
 
 echo This is intended to be run interactively
 
-apt-get install php7.4 libapache2-mod-php7.4  php7.4-common php7.4-mysql php7.4-curl php7.4-json php7.4-mbstring php7.4-zip php7.4-xml php7.4-gd php7.4-apc php7.4-intl php7.4-memcache php7.4-memcached
+apt-get install php7.4 libapache2-mod-php7.4 php7.4-cli php7.4-opcache php7.4-readline php7.4-common php7.4-mysql php7.4-curl php7.4-json php7.4-mbstring php7.4-zip php7.4-xml php7.4-gd php7.4-apc php7.4-intl php7.4-memcache php7.4-memcached
 
 cat << EOF
 
@@ -38,7 +38,7 @@ systemctl restart apache2
 
 Then check with info.php to make sure you have PHP 7.4
 
-To make sure you are running HP 7.4 at the command line use
+To make sure you are running PHP 7.4 at the command line use
 
 update-alternatives --config php
 
