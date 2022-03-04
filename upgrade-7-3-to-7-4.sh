@@ -1,6 +1,11 @@
 
 # Live upgrade from a 7.3 install to a 7.4 install
 
+if [ -f "/usr/bin/php7.4" ]; then
+    echo "It looks like you already have PHP 7.4 installed"
+    exit
+fi
+
 export DEBIAN_FRONTEND=noninteractive
 export LC_ALL=C.UTF-8
 locale -a
